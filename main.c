@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h> 
 #include <string.h>
 
 char g_tokens;
@@ -7,28 +8,28 @@ void yyparse();
 
 int main( int argc, const char* argv[] ) {
 
-    if ( argc != 1 ) {
-        //print error message
+    if ( argc != 2 ) {
+        printf("Wrong number of arguments\n");
         exit(1);
     }
 
-    if ( strncmp(argv[0], "scan" , 4) ) {
+    if ( strncmp(argv[1], "scan" , 4) ) {
         g_tokens = 0;
         while(yylex()){}
         exit(0);
     }
 
-    if ( strncmp(argv[0], "token" , 5) ) {
+    if ( strncmp(argv[1], "token" , 5) ) {
         g_tokens = 1;
         while(yylex()){}
         exit(0);
     }
 
-    if ( strncmp(argv[0], "parser" , 6) ) {
+    if ( strncmp(argv[1], "parser" , 6) ) {
         yyparse();
         exit(0);
     }
 
-    //print error message
+    printf("Invalid mode\n");
     exit(1);
 }
