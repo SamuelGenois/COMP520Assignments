@@ -4,6 +4,8 @@
 #include <stdlib.h>
 
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
+
+char mode;
 %}
 
 DIGIT [0-9]
@@ -36,18 +38,26 @@ DIGIT [0-9]
 %%
 [ \t\r\n]+
 
-"+"     return '+';
-"-"     return '-';
-"*"     return '*';
-"/"     return '/';
-"("     return '(';
-")"     return ')';
+"+"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("+\n"); return '+'; }
+"-"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("-\n"); return '-'; }
+"*"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("*\n"); return '*'; }
+"/"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("/\n"); return '/'; }
+"("     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("(\n"); return '('; }
+")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf(")\n"); return ')'; }
 
 0|([1-9]{DIGIT}*) {
+    if (mode == SCAN)
+        printf("OK\n");
+    if (mode == TOKEN)
+        fprintf("Interger value: %s\n", yytext);
 	yylval.intval = atoi(yytext);
 	return tINTVAL;
 }
 [a-zA-Z_][a-zA-Z0-9_]* {
+    if (mode == SCAN)
+        printf("OK\n");
+    if (mode == TOKEN)
+        fprintf("identifier: %s\n", yytext);
 	yylval.identifier = strdup(yytext);
 	return tIDENTIFIER;
 }

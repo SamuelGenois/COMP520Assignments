@@ -2,7 +2,11 @@
 #include <stdlib.h> 
 #include <string.h>
 
-char g_tokens;
+#define SCAN 0
+#define TOKENS 1
+#define PARSE 2
+
+char mode;
 void yyflex();
 void yyparse();
 
@@ -14,18 +18,19 @@ int main( int argc, const char* argv[] ) {
     }
 
     if ( strncmp(argv[1], "scan" , 4) ) {
-        g_tokens = 0;
+        mode = SCAN;
         while(yylex()){}
         exit(0);
     }
 
-    if ( strncmp(argv[1], "token" , 5) ) {
-        g_tokens = 1;
+    if ( strncmp(argv[1], "tokens" , 6) ) {
+        mode = TOKEN;
         while(yylex()){}
         exit(0);
     }
 
-    if ( strncmp(argv[1], "parser" , 6) ) {
+    if ( strncmp(argv[1], "parse" , 5) ) {
+        mode = PARSE;
         yyparse();
         exit(0);
     }
