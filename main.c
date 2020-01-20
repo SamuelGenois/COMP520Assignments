@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
-
-#define SCAN 0
-#define TOKENS 1
-#define PARSE 2
+#include "modes.h"
 
 char mode;
 void yyflex();

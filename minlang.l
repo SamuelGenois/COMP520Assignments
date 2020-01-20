@@ -2,6 +2,7 @@
 #include "parser.tab.h" // Token definitions from the parser
 #include <string.h>
 #include <stdlib.h>
+#include "modes.h"
 
 #define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
 
