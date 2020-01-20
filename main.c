@@ -1,4 +1,5 @@
-#include <stdio>
+#include <stdio.h>
+#include <string.h>
 
 char g_tokens;
 void yyflex();
