@@ -39,26 +39,26 @@ DIGIT [0-9]
 %%
 [ \t\r\n]+
 
-"+"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("+\n"); return '+'; }
-"-"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("-\n"); return '-'; }
-"*"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("*\n"); return '*'; }
-"/"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("/\n"); return '/'; }
-"("     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf("(\n"); return '('; }
-")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKEN) printf(")\n"); return ')'; }
+"+"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("+\n"); return '+'; }
+"-"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("-\n"); return '-'; }
+"*"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '*'; }
+"/"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("/\n"); return '/'; }
+"("     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("(\n"); return '('; }
+")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return ')'; }
 
 0|([1-9]{DIGIT}*) {
     if (mode == SCAN)
         printf("OK\n");
-    if (mode == TOKEN)
-        fprintf("Interger value: %s\n", yytext);
+    if (mode == TOKENS)
+        printf("Interger value: %s\n", yytext);
 	yylval.intval = atoi(yytext);
 	return tINTVAL;
 }
 [a-zA-Z_][a-zA-Z0-9_]* {
     if (mode == SCAN)
         printf("OK\n");
-    if (mode == TOKEN)
-        fprintf("identifier: %s\n", yytext);
+    if (mode == TOKENS)
+        printf("identifier: %s\n", yytext);
 	yylval.identifier = strdup(yytext);
 	return tIDENTIFIER;
 }

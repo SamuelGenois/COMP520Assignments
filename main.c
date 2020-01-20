@@ -21,7 +21,7 @@ int main( int argc, const char* argv[] ) {
     }
 
     if ( strncmp(argv[1], "tokens" , 6) ) {
-        mode = TOKEN;
+        mode = TOKENS;
         while(yylex()){}
         exit(0);
     }
