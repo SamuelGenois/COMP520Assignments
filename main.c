@@ -3,7 +3,6 @@
 #include <string.h>
 #include "modes.h"
 
-char mode;
 void yyflex();
 void yyparse();
 
@@ -14,19 +13,19 @@ int main( int argc, const char* argv[] ) {
         exit(1);
     }
 
-    if ( strncmp(argv[1], "scan" , 4) ) {
+    if ( strncmp(argv[1], "scan" , 4) ==0 ) {
         mode = SCAN;
         while(yylex()){}
         exit(0);
     }
 
-    if ( strncmp(argv[1], "tokens" , 6) ) {
+    if ( strncmp(argv[1], "tokens" , 6) ==0 ) {
         mode = TOKENS;
         while(yylex()){}
         exit(0);
     }
 
-    if ( strncmp(argv[1], "parse" , 5) ) {
+    if ( strncmp(argv[1], "parse" , 5) == 0 ) {
         mode = PARSE;
         yyparse();
         exit(0);
