@@ -52,8 +52,8 @@ void yyerror(const char *s) {
  * the same precedence. Ties at the same level are broken using either %left or %right, which
  * denote left-associative and right-associative respectively.
  */
-%left '&&' '||'
-%left '==' '!=' '<=' '>='
+%left tAND tOR
+%left tEQUAL tNOTEQUAL tATMOST tATLEAST tGREATER tLESS
 %left '+' '-'
 %left '*' '/'
 %left '!'
@@ -75,14 +75,14 @@ prog : prog decl
      | %empty
 ; 
 
-decl : 'var' tIDENTIFIER ':' type '=' exp ';'
-     | 'var' tIDENTIFIER '=' exp ';'
+decl : tVAR tIDENTIFIER ':' type '=' exp ';'
+     | tVAR tIDENTIFIER '=' exp ';'
 ;
 
-type : 'int'
-     | 'bool'
-     | 'float'
-     | 'string'
+type : tINTTYPE
+     | tBOOLTYPE
+     | tFLOAT
+     | tSTRING
 ;
 
 stmts : stmts stmt
@@ -110,14 +110,14 @@ exp : tIDENTIFIER { printf("Load %s\n", $1); }
     | exp '/' exp { printf("Div\n"); }
     | exp '+' exp { printf("Plus\n"); }
     | exp '-' exp { printf("Minus\n"); }
-    | exp '==' exp { printf("Equal\n"); }
-    | exp '!=' exp { printf("Not Equal\n"); }
-    | exp '>=' exp { printf("Greater or Equal Than\n"); }
-    | exp '<=' exp { printf("Less or Equal Than\n"); }
-    | exp '>' exp { printf("Greater Than\n"); }
-    | exp '<' exp { printf("Less Than\n"); }
-    | exp '&&' exp { printf("And\n"); }
-    | exp '||' exp { printf("Or\n"); }
+    | exp tEQUAL exp { printf("Equal\n"); }
+    | exp tNOTEQUAL exp { printf("Not Equal\n"); }
+    | exp tATLEAST exp { printf("Greater or Equal Than\n"); }
+    | exp tATMOST exp { printf("Less or Equal Than\n"); }
+    | exp tGREATER exp { printf("Greater Than\n"); }
+    | exp tLESS exp { printf("Less Than\n"); }
+    | exp tAND exp { printf("And\n"); }
+    | exp tOR exp { printf("Or\n"); }
     | '(' exp ')' { }
 ;
 

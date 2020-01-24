@@ -36,14 +36,32 @@ DIGIT [0-9]
  *              part of the bison grammar file.
  */
 %%
+#[^\n]+\n
 [ \t\r\n]+
 
 "+"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("+\n"); return '+'; }
 "-"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("-\n"); return '-'; }
 "*"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '*'; }
+"!"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '!'; }
+"="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '='; }
+":"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return ':'; }
+";"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return ';'; }
 "/"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("/\n"); return '/'; }
 "("     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("(\n"); return '('; }
 ")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return ')'; }
+"{"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return '{'; }
+"}"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return '}'; }
+
+"var"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("var\n"); return tVAR; }
+"int"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("int\n"); return tINTTYPE; }
+"bool"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("bool\n"); return tBOOLTYPE; }
+"float"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("float\n"); return tFLOAT; }
+"string"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("string\n"); return tSTRING; }
+"if"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("if\n"); return tIF; }
+"else"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("else\n"); return tELSE; }
+"while"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("while\n"); return tWHILE; }
+"read"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("read\n"); return tREAD; }
+"print"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("print\n"); return tPRINT; }
 
 (0)|([1-9]{DIGIT}*\.{DIGIT}+) {
     if (mode == SCAN)
