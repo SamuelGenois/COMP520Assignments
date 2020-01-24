@@ -40,6 +40,10 @@ void yyerror(const char *s) {
  * yylval union] and an identifier. Multiple tokens can eb defined per directive by using a list
  * of identifiers separated by spaces.
  */
+%token tVAR tINT tBOOL tFLOAT tSTRING
+%token tEQUAL tNOTEQUAL tATMOST tATLEAST tGREATER tLESS
+%token tIF tELSE tWHILE
+%token tREAD tPRINT
 %token <intval> tINTVAL
 %token <boolval> tBOOLVAL
 %token <floatval> tFLOATVAL
@@ -79,8 +83,8 @@ decl : tVAR tIDENTIFIER ':' type '=' exp ';'
      | tVAR tIDENTIFIER '=' exp ';'
 ;
 
-type : tINTTYPE
-     | tBOOLTYPE
+type : tINT
+     | tBOOL
      | tFLOAT
      | tSTRING
 ;
