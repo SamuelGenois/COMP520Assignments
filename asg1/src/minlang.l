@@ -84,7 +84,7 @@ print   { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("print\n"
         printf("OK\n");
     if (mode == TOKENS)
         printf("Boolean value: %s\n", yytext);
-	yylval.boolval = atoi( strcmp(yytext, "True") == 0 );
+	yylval.boolval = strcmp(yytext, "True") == 0;
 	return tBOOLVAL;
 }
 "[a-zA-Z0-9_ \t\r\n]*" {

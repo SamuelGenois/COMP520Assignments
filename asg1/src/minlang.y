@@ -28,8 +28,8 @@ void yyerror(const char *s) {
  * optionally (b) non-terminals (variables in productions) with AST information if any.
  */
 %union {
-	int intval;
-    byte boolval;
+    int intval;
+    char boolval;
     float floatval;
     char *strval;
 	char *identifier;
@@ -107,8 +107,9 @@ body : stmt
 
 exp : tIDENTIFIER { printf("Load %s\n", $1); }
     | tINTVAL     { printf("Push %i\n", $1); }
-    | tINTVAL     { printf("Push %i\n", $1); }
-    | tINTVAL     { printf("Push %i\n", $1); }
+    | tBOOLVAL    { printf("Push %i\n", $1); }
+    | tFLOATVAL   { printf("Push %f\n", $1); }
+    | tSTRVAL  { printf("Push %s\n", $1); }
     | '!' exp     { printf("Neg\n"); }
     | exp '*' exp { printf("Mult\n"); }
     | exp '/' exp { printf("Div\n"); }
