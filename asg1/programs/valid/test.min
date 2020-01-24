@@ -1,0 +1,2 @@
+var test : int = 1;
+test = test + 2;
