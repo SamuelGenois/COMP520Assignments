@@ -49,8 +49,8 @@ DIGIT [0-9]
 "/"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("/\n"); return '/'; }
 "("     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("(\n"); return '('; }
 ")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return ')'; }
-"{"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return '{'; }
-"}"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return '}'; }
+"{"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("{\n"); return '{'; }
+"}"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("}\n"); return '}'; }
 
 var     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("var\n"); return tVAR; }
 int     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("int\n"); return tINT; }
@@ -87,7 +87,7 @@ print   { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("print\n"
 	yylval.boolval = strcmp(yytext, "True") == 0;
 	return tBOOLVAL;
 }
-"[a-zA-Z0-9_ \t\r\n]*" {
+\".*\" {
     if (mode == SCAN)
         printf("OK\n");
     if (mode == TOKENS)
