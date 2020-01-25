@@ -97,7 +97,7 @@ stmt : tIDENTIFIER '=' exp ';'
      | tIF '(' exp ')' body
      | tIF '(' exp ')' body tELSE body
      | tWHILE '(' exp ')' body
-     | tREAD '(' exp ')' ';'
+     | tREAD '(' tIDENTIFIER ')' ';'
      | tPRINT '(' exp ')' ';'
 ;
 
@@ -105,24 +105,24 @@ body : stmt
      | '{' stmts '}'
 ;
 
-exp : tIDENTIFIER { printf("Load %s\n", $1); }
-    | tINTVAL     { printf("Push %i\n", $1); }
-    | tBOOLVAL    { printf("Push %i\n", $1); }
-    | tFLOATVAL   { printf("Push %f\n", $1); }
-    | tSTRVAL  { printf("Push %s\n", $1); }
-    | '!' exp     { printf("Neg\n"); }
-    | exp '*' exp { printf("Mult\n"); }
-    | exp '/' exp { printf("Div\n"); }
-    | exp '+' exp { printf("Plus\n"); }
-    | exp '-' exp { printf("Minus\n"); }
-    | exp tEQUAL exp { printf("Equal\n"); }
-    | exp tNOTEQUAL exp { printf("Not Equal\n"); }
-    | exp tATLEAST exp { printf("Greater or Equal Than\n"); }
-    | exp tATMOST exp { printf("Less or Equal Than\n"); }
-    | exp tGREATER exp { printf("Greater Than\n"); }
-    | exp tLESS exp { printf("Less Than\n"); }
-    | exp tAND exp { printf("And\n"); }
-    | exp tOR exp { printf("Or\n"); }
+exp : tIDENTIFIER
+    | tINTVAL
+    | tBOOLVAL
+    | tFLOATVAL
+    | tSTRVAL
+    | '!' exp
+    | exp '*' exp
+    | exp '/' exp
+    | exp '+' exp
+    | exp '-' exp
+    | exp tEQUAL exp
+    | exp tNOTEQUAL exp
+    | exp tATLEAST exp
+    | exp tATMOST exp
+    | exp tGREATER exp
+    | exp tLESS exp
+    | exp tAND exp
+    | exp tOR exp
     | '(' exp ')' { }
 ;
 
