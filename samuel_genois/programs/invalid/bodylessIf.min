@@ -1,2 +1,0 @@
-var cond : bool = True;
-if(cond)

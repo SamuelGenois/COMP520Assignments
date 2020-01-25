@@ -1,3 +1,0 @@
-while(var x = true) {
-    print("This is wrong");
-}

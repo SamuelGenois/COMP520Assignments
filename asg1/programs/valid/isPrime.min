@@ -1,0 +1,22 @@
+# Determines if an integer is a prime number
+
+var number : int = 0;
+
+while(number < 2) {
+    print("Enter an integer greater than 1:");
+    read(number);
+}
+
+var divisorCandidate = 2;
+var divisorFound = False;
+
+while(divisorCandidate < number && !divisorFound) {
+    divisorFound = number/divisorCandidate * divisorCandidate == number;
+    divisorCandidate = divisorCandidate + 1;
+}
+
+if(divisorFound)
+    print("The number is not a prime number");
+else
+    print("The number is a prime number");
+
