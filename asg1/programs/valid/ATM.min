@@ -3,7 +3,7 @@
 var exit : bool = False;
 var balance : float = 100.0;
 var amount = 0.0;
-var option : string = ""
+var option : string = "";
 
 #The user can only make up to 3 transactions per day
 var remTransLimit : int = 3;
