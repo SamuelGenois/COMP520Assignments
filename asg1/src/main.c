@@ -28,6 +28,7 @@ int main( int argc, const char* argv[] ) {
     if ( strncmp(argv[1], "parse" , 5) == 0 ) {
         mode = PARSE;
         yyparse();
+        printf("OK\n");
         exit(0);
     }
 

@@ -51,6 +51,14 @@ DIGIT [0-9]
 ")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return ')'; }
 "{"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("{\n"); return '{'; }
 "}"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("}\n"); return '}'; }
+"&&"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("&&\n"); return tAND; }
+"||"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("||\n"); return tOR; }
+"=="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("==\n"); return tEQUAL; }
+"!="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("!=\n"); return tNOTEQUAL; }
+"<="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("<=\n"); return tATMOST; }
+">="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(">=\n"); return tATLEAST; }
+">"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(">\n"); return tGREATER; }
+"<"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("<\n"); return tLESS; }
 
 var     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("var\n"); return tVAR; }
 int     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("int\n"); return tINT; }
