@@ -42,10 +42,10 @@ DIGIT [0-9]
 "+"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("+\n"); return '+'; }
 "-"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("-\n"); return '-'; }
 "*"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '*'; }
-"!"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '!'; }
-"="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return '='; }
-":"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return ':'; }
-";"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("*\n"); return ';'; }
+"!"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("!\n"); return '!'; }
+"="     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("=\n"); return '='; }
+":"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(":\n"); return ':'; }
+";"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(";\n"); return ';'; }
 "/"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("/\n"); return '/'; }
 "("     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("(\n"); return '('; }
 ")"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf(")\n"); return ')'; }
@@ -63,7 +63,7 @@ while   { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("while\n"
 read    { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("read\n"); return tREAD; }
 print   { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("print\n"); return tPRINT; }
 
-(0)|([1-9]{DIGIT}*\.{DIGIT}+) {
+(0|([1-9]{DIGIT}*))\.{DIGIT}+ {
     if (mode == SCAN)
         printf("OK\n");
     if (mode == TOKENS)
