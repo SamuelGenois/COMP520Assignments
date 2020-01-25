@@ -1,0 +1,52 @@
+#This program simulates an ATM
+
+var exit : bool = False;
+var balance : float = 100.0;
+var amount = 0.0;
+var option : string = "";
+
+#The user can only make up to 3 transactions per day
+var remTransLimit : int = 3;
+
+print("Welcome");
+
+while(!exit) {
+
+    print("Number of daily transactions left: ");
+    print(remTransLimit);
+
+    print("Choose an option");
+    read(option);
+
+    if(option == "deposit") {
+        print("Enter amount:");
+        read(amount);
+        balance = balance + amount;
+        print("Transaction sucessful. Current balance:");
+        print(balance);
+        remTransLimit = remTransLimit - 1;
+    }
+
+    if(option == "withdraw") {
+        print("Enter amount:");
+        read(amount);
+        if(amount <= balance) {
+            balance = balance - amount;
+            print("Transaction sucessful. Current balance:");
+            print(balance);
+            remTransLimit = remTransLimit - 1;
+        }
+        else
+            print("Transaction failed. Amount cannot be greater than balance");
+    }
+
+    if(option == "exit")
+        exit = True;
+
+    if(remTransLimit == 0) {
+        print("You have reached your daily transaction limit");
+        exit = True;
+    }
+}
+
+print("Goodbye");

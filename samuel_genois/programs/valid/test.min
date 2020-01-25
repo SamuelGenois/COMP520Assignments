@@ -1,0 +1,3 @@
+var test : int = 1;
+test = test + 2;
+print("N apple24");
