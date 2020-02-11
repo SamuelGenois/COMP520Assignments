@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tree.h"
 
 //Pretty printer
-void pretty(STMT *stmt) {
-    prettySTMT(STMT *stmt);
+void pretty(STMT *ast) {
+    prettySTMT(STMT *ast);
 }
 
 void prettySTMT(STMT *stmt) {
@@ -195,7 +194,7 @@ void prettyEXP(EXP *exp)
 }
 
 //Codegen
-void genCode(STMT *stmt) {
+void genCode(STMT *ast) {
     printf("#include <stdio.h>\n");
     printf("#include <stdlib.h>\n");
     printf("#include <string.h>\n");

@@ -1,5 +1,7 @@
+#include "tree.h"
+
 //Pretty printer
-void prettySTMT(STMT astRoot);
+void pretty(STMT *ast);
 
 //Codegen
-void genCodeSTMT(STMT astRoot);
+void genCode(STMT *ast);
