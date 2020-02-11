@@ -4,77 +4,6 @@
 #include "tree.h"
 
 //Pretty printer
-void pretty(STMT *ast) {
-    prettySTMT(*ast);
-}
-
-void prettySTMT(STMT *stmt) {
-    if(stmt == 0)
-        return;
-    
-    prettySTMT(stmt->next);
-
-    switch(stmt->kind) {
-        case k_decl:
-            switch(stmt->val.declaration.type) {
-                case type_int:
-                    printf("var %s : int = ", stmt->val.declaration.identifier);
-                    break;
-                case type_bool:
-                    printf("var %s : bool = ", stmt->val.declaration.identifier);
-                    break;
-                case type_float:
-                    printf("var %s : float = ", stmt->val.declaration.identifier);
-                    break;
-                case type_string:
-                    printf("var %s : string = ", stmt->val.declaration.identifier);
-                    break;
-                case type_infer:
-                    printf("var %s = ", stmt->val.declaration.identifier);
-                    break;
-            }
-            prettyEXP(stmt->val.declaration.exp);
-            break;
-        case k_exp:
-            prettyEXP(stmt->val.exp);
-            printf(";\n");
-            break;
-        case k_if:
-            printf("if ( ");
-            prettyEXP(stmt->val.ifWhile.condition);
-            printf(" )\n");
-            prettySTMT(stmt->val.ifWhile.block);
-            break;
-        case k_ifelse:
-            printf("if ( ");
-            prettyEXP(stmt->val.ifElse.condition);
-            printf(" )\n");
-            prettySTMT(stmt->val.ifElse.block1);
-            printf("else\n");
-            prettySTMT(stmt->val.ifElse.block2);
-            break;
-        case k_while:
-            printf("while ( ");
-            prettyEXP(stmt->val.ifWhile.condition);
-            printf(" )\n");
-            prettySTMT(stmt->val.ifWhile.block);
-            break;
-        case k_read:
-            printf("read(%s);\n", stmt->val.readIdentifier);
-            break;
-        case k_print:
-            printf("print(");
-            prettyEXP(stmt->val.exp);
-            printf(")\n");
-            break;
-        case k_block:
-            printf("{\n");
-            prettySTMT(stmt->val.blockContent);
-            printf("\n}\n");
-            break;
-    }
-}
-
 void prettyEXP(EXP *exp)
 {
     switch (exp->kind) {
@@ -194,12 +123,79 @@ void prettyEXP(EXP *exp)
     }
 }
 
+void prettySTMT(STMT *stmt) {
+    if(stmt == 0)
+        return;
+    
+    prettySTMT(stmt->next);
+
+    switch(stmt->kind) {
+        case k_decl:
+            switch(stmt->val.declaration.type) {
+                case type_int:
+                    printf("var %s : int = ", stmt->val.declaration.identifier);
+                    break;
+                case type_bool:
+                    printf("var %s : bool = ", stmt->val.declaration.identifier);
+                    break;
+                case type_float:
+                    printf("var %s : float = ", stmt->val.declaration.identifier);
+                    break;
+                case type_string:
+                    printf("var %s : string = ", stmt->val.declaration.identifier);
+                    break;
+                case type_infer:
+                    printf("var %s = ", stmt->val.declaration.identifier);
+                    break;
+            }
+            prettyEXP(stmt->val.declaration.exp);
+            break;
+        case k_exp:
+            prettyEXP(stmt->val.exp);
+            printf(";\n");
+            break;
+        case k_if:
+            printf("if ( ");
+            prettyEXP(stmt->val.ifWhile.condition);
+            printf(" )\n");
+            prettySTMT(stmt->val.ifWhile.block);
+            break;
+        case k_ifelse:
+            printf("if ( ");
+            prettyEXP(stmt->val.ifElse.condition);
+            printf(" )\n");
+            prettySTMT(stmt->val.ifElse.block1);
+            printf("else\n");
+            prettySTMT(stmt->val.ifElse.block2);
+            break;
+        case k_while:
+            printf("while ( ");
+            prettyEXP(stmt->val.ifWhile.condition);
+            printf(" )\n");
+            prettySTMT(stmt->val.ifWhile.block);
+            break;
+        case k_read:
+            printf("read(%s);\n", stmt->val.readIdentifier);
+            break;
+        case k_print:
+            printf("print(");
+            prettyEXP(stmt->val.exp);
+            printf(")\n");
+            break;
+        case k_block:
+            printf("{\n");
+            prettySTMT(stmt->val.blockContent);
+            printf("\n}\n");
+            break;
+    }
+}
+
+void pretty(STMT *ast) {
+    prettySTMT(*ast);
+}
+
 //Codegen
-void codeGen(STMT *ast) {
-    printf("#include <stdio.h>\n");
-    printf("#include <stdlib.h>\n");
-    printf("#include <string.h>\n");
-    genCodeSTMT(ast);
+void codeGenEXP(EXP *exp, int indentCount) {
 }
 
 void codeGenSTMT(STMT *stmt) {
@@ -207,5 +203,9 @@ void codeGenSTMT(STMT *stmt) {
 	exit(1);
 }
 
-void codeGenEXP(EXP *exp, int indentCount) {
+void codeGen(STMT *ast) {
+    printf("#include <stdio.h>\n");
+    printf("#include <stdlib.h>\n");
+    printf("#include <string.h>\n");
+    genCodeSTMT(ast);
 }
