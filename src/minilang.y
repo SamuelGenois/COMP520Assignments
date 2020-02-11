@@ -31,7 +31,7 @@ void yyerror(const char *s) {
 %union {
     int intval;
     char boolval;
-    float floatval;
+    double floatval;
     char *strval;
 	char *identifier;
     struct EXP *exp;
@@ -89,10 +89,10 @@ body : stmt { $$ = $1; }
      | '{' stmts '}' { $$ = $2; }
 ;
 
-exp : tIDENTIFIER { $$ = makeExpIdentifier($1, @1.first_line); printf("minlang id: %s\n",$$->val.identifierExp.identifier);}
+exp : tIDENTIFIER { $$ = makeExpIdentifier($1, @1.first_line); }
     | tINTVAL { $$ = makeExpIntLiteral($1, @1.first_line); }
     | tBOOLVAL { $$ = makeExpBoolLiteral($1, @1.first_line); }
-    | tFLOATVAL { $$ = makeExpFloatLiteral($1, @1.first_line); printf("minlang float: %f\n",$$->val.floatLiteral);}
+    | tFLOATVAL { $$ = makeExpFloatLiteral($1, @1.first_line); }
     | tSTRVAL { $$ = makeExpStringLiteral($1, @1.first_line); }
     | '-' exp { $$ = makeExpUnaryMinus($2, @1.first_line); }
     | '!' exp { $$ = makeExpNot($2, @1.first_line); }
