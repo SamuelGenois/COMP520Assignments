@@ -71,7 +71,7 @@ decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtDeclaration($2, $6, 
      | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_bool, @1.first_line); }
      | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_float, @1.first_line); }
      | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_string, @1.first_line); }
-     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeStmtDeclarationInferred($2, $4, @1.first_line); }
+     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtDeclarationInferred($2, $4, @1.first_line); }
 ;
 
 stmts : stmts stmt { $$ = $2; $$->next = $1; }
