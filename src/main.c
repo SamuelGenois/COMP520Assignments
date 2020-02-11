@@ -2,7 +2,6 @@
 #include <stdlib.h> 
 #include <string.h>
 #include "modes.h"
-#include "tree.h"
 #include "symbol.h"
 #include "printer.h"
 
