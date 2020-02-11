@@ -4,7 +4,7 @@
 #include "tree.h"
 
 STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
-    Stmt *s = malloc(sizeof(Stmt));
+    STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
     s->kind = k_Decl;
     s->val.declaration.exp = exp;
@@ -13,7 +13,7 @@ STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
     return s;
 }
 STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
-    Stmt *s = malloc(sizeof(Stmt));
+    STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
     s->kind = k_Decl;
     s->val.declaration.exp = exp;
