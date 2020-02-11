@@ -2,7 +2,6 @@
 #include <stdlib.h> 
 #include <string.h>
 #include "modes.h"
-#include "tree.h"
 #include "printer.h"
 
 void yyflex();
@@ -42,7 +41,7 @@ int main( int argc, const char* argv[] ) {
     }
 
     if ( strncmp(argv[1], "symbol" , 6) == 0 ) {
-        mode = SYMBOL;
+        mode = SYMBOLPRINT;
         yyparse();
         //printSymbolTable(symbolTable);
         exit(0);
