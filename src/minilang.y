@@ -50,7 +50,9 @@ void yyerror(const char *s) {
 %token <boolval> tBOOLVAL
 %token <floatval> tFLOATVAL
 %token <strval> tSTRVAL
-%token <identifier> tIDENTIFIER 
+%token <identifier> tIDENTIFIER
+%type <exp> decl exp
+%type <stmt> prog stmts stmt body
 
 /* Precedence directives resolve grammar ambiguities by breaking ties between shift/reduce
  * operations. Tokens are grouped into precendence levels, with lower precedence coming first
@@ -102,6 +104,7 @@ stmt : tIDENTIFIER '=' exp ';'
 ;
 
 body : stmt
+     | decl
      | '{' stmts '}'
 ;
 
