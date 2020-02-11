@@ -37,11 +37,6 @@ void yyerror(const char *s) {
 	char *identifier;
 }
 
-/* Token directives define the token types to be returned by the scanner (excluding character
- * tokens). Each token definition takes [optionally, a reference to the associated field in the
- * yylval union] and an identifier. Multiple tokens can eb defined per directive by using a list
- * of identifiers separated by spaces.
- */
 %token tVAR tINT tBOOL tFLOAT tSTRING
 %token tEQUAL tNOTEQUAL tATMOST tATLEAST tGREATER tLESS
 %token tIF tELSE tWHILE
@@ -54,40 +49,28 @@ void yyerror(const char *s) {
 %type <exp> decl exp
 %type <stmt> prog stmts stmt body
 
-/* Precedence directives resolve grammar ambiguities by breaking ties between shift/reduce
- * operations. Tokens are grouped into precendence levels, with lower precedence coming first
- * and then higher precedence in later directives. Tokens specified in the same directive have
- * the same precedence. Ties at the same level are broken using either %left or %right, which
- * denote left-associative and right-associative respectively.
- */
 %left tAND tOR
 %left tEQUAL tNOTEQUAL tATMOST tATLEAST tGREATER tLESS
 %left '+' '-'
 %left '*' '/'
 %left '!'
 
-/* Start token (by default if this is missing it takes the first production */
 %start prog
 
-/* Generate the yylloc structure used for storing line numbers with tokens */
 %locations
-/* Generate detailed error messages */
 %error-verbose
 
-/* The second section of a bison file contains the productions. Note that rules with the
- * same LHS may be joined together and separated with a pipe.
- */
 %% 
 prog : prog decl
      | prog stmt
      | %empty
 ; 
 
-decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeSTATEMENT_assign($1, $3); }
-     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';'
-     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';'
-     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';'
-     | tVAR tIDENTIFIER '=' exp ';'
+decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtAssignment($6, Type.type_int, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtAssignment($6, Type.type_bool, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtAssignment($6, type_float, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtAssignment($6, type_string, @1.first_line); }
+     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtAssignmentInferred($6, @1.first_line); }
 ;
 
 stmts : stmts stmt
@@ -109,7 +92,7 @@ body : stmt
 ;
 
 exp : tIDENTIFIER
-    | tINTVAL { $$ = makeEXP_intLiteral($1, @1.first_line); }
+    | tINTVAL { $$ = makeExpIntLiteral($1, @1.first_line); }
     | tBOOLVAL
     | tFLOATVAL
     | tSTRVAL

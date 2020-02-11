@@ -91,7 +91,8 @@ struct STMT {
 STMT *astRoot;
 
 //AST building functions
-//STMT *makeStmtAssignment(char *name, Type type, );
+STMT *makeStmtAssignmentInferred(char *name);
+STMT *makeStmtAssignment(char *name, Type type);
 
 
 STMT *makeStmtskip();

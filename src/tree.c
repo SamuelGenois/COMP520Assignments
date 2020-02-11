@@ -1,14 +1,17 @@
-STMT *makeStmtskip() { return NULL { return NULL; } }
+STMT *makeStmtAssignmentInferred(char *name, int lineno) { return NULL; }
+STMT *makeStmtAssignment(char *name, Type type, , int lineno){ return NULL; }
+
+STMT *makeStmtskip() { return NULL; }
 STMT *makeStmtexp(EXP *exp) { return NULL; }
 STMT *makeStmtSequence(STMT *next, STMT *rest) { return NULL; }
 STMT *makeStmtRf(EXP *condition, STMT *block) { return NULL; }
 STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2) { return NULL; }
 STMT *makeStmtWhile(EXP *condition, STMT *block) { return NULL; }
 
-EXP *makeExpIntLiteral(int val) { return NULL; }
-EXP *makeExpboolLiteral(int val) { return NULL; }
-EXP *makeExpFloatLiteral(double val) { return NULL; }
-EXP *makeExpstringLiteral(char *val) { return NULL; }
+EXP *makeExpIntLiteral(int val, int lineno) { return NULL; }
+EXP *makeExpboolLiteral(char val, int lineno) { return NULL; }
+EXP *makeExpFloatLiteral(double val, int lineno) { return NULL; }
+EXP *makeExpstringLiteral(char *val, int lineno) { return NULL; }
 EXP *makeExpid(char *name) { return NULL; }
 EXP *makeExpassign(char *lhs, EXP *rhs) { return NULL; }
 EXP *makeExpOr(EXP *lhs, EXP *rhs) { return NULL; }
