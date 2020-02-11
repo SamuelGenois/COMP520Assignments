@@ -46,8 +46,8 @@ void yyerror(const char *s) {
 %token <floatval> tFLOATVAL
 %token <strval> tSTRVAL
 %token <identifier> tIDENTIFIER
-%type <exp> decl exp
-%type <stmt> prog stmts stmt body
+%type <exp> exp
+%type <stmt> prog decl stmts stmt body
 
 %left tAND tOR
 %left tEQUAL tNOTEQUAL tATMOST tATLEAST tGREATER tLESS
@@ -61,56 +61,55 @@ void yyerror(const char *s) {
 %error-verbose
 
 %% 
-prog : prog decl
-     | prog stmt
-     | %empty
+prog : prog decl { $$ = *makeStmtSequence(STMT *next, STMT *rest, int lineno); }
+     | prog stmt { $$ = $2; $$->next = $1; }
+     | %empty { $$ = NULL; }
 ; 
 
-decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtAssignment($6, Type.type_int, @1.first_line); }
-     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtAssignment($6, Type.type_bool, @1.first_line); }
-     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtAssignment($6, type_float, @1.first_line); }
-     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtAssignment($6, type_string, @1.first_line); }
-     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtAssignmentInferred($6, @1.first_line); }
+decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtDeclaration($6, Type.type_int, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtDeclaration($6, Type.type_bool, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtDeclaration($6, type_float, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtDeclaration($6, type_string, @1.first_line); }
+     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtDeclarationInferred($4, @1.first_line); }
 ;
 
-stmts : stmts stmt
-      | stmts decl
-      | %empty
+stmts : stmts stmt { $$ = $2; $$->next = $1; }
+      | stmts decl { $$ = $2; $$->next = $1; }
+      | %empty { $$ = NULL; }
 ;
 
-stmt : tIDENTIFIER '=' exp ';'
-     | tIF '(' exp ')' body
-     | tIF '(' exp ')' body tELSE body
-     | tWHILE '(' exp ')' body
-     | tREAD '(' tIDENTIFIER ')' ';'
-     | tPRINT '(' exp ')' ';'
+stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtAssignment($1, $3, @1.first_line); }
+     | tIF '(' exp ')' body { $$ = makeStmtAssignment($1, $3, @1.first_line); }
+     | tIF '(' exp ')' body tELSE body { $$ = (, @1.first_line); }
+     | tWHILE '(' exp ')' body { $$ = (, @1.first_line); }
+     | tREAD '(' tIDENTIFIER ')' ';' { $$ = (, @1.first_line); }
+     | tPRINT '(' exp ')' ';' { $$ = (, @1.first_line); }
 ;
 
-body : stmt
-     | decl
-     | '{' stmts '}'
+body : stmt { $$ = $1; }
+     | '{' stmts '}' { $$ = $2; }
 ;
 
 exp : tIDENTIFIER
     | tINTVAL { $$ = makeExpIntLiteral($1, @1.first_line); }
-    | tBOOLVAL
-    | tFLOATVAL
-    | tSTRVAL
-    | '-' exp
-    | '!' exp
-    | exp '*' exp
-    | exp '/' exp
-    | exp '+' exp
-    | exp '-' exp
-    | exp tEQUAL exp
-    | exp tNOTEQUAL exp
-    | exp tATLEAST exp
-    | exp tATMOST exp
-    | exp tGREATER exp
-    | exp tLESS exp
-    | exp tAND exp
-    | exp tOR exp
-    | '(' exp ')' { }
+    | tBOOLVAL { $$ = makeBoolIntLiteral($1, @1.first_line); }
+    | tFLOATVAL { $$ = makeExpfloatLiteral($1, @1.first_line); }
+    | tSTRVAL { $$ = makeExpStringLiteral($1, @1.first_line); }
+    | '-' exp { $$ = makeExpUnaryMinus($2, @1.first_line); }
+    | '!' exp { $$ = makeExpNot($2, @1.first_line); }
+    | exp '*' exp { $$ = makeExpMultiplication($1, $3, @1.first_line); }
+    | exp '/' exp { $$ = makeExpDivision($1, $3, @1.first_line); }
+    | exp '+' exp { $$ = makeExpAddition($1, $3, @1.first_line); }
+    | exp '-' exp { $$ = makeExpSubtraction($1, $3, @1.first_line); }
+    | exp tEQUAL exp { $$ = makeExpEqual($1, $3, @1.first_line); }
+    | exp tNOTEQUAL exp { $$ = makeExpNotEqual($1, $3, @1.first_line); }
+    | exp tATLEAST exp { $$ = makeExpGreaterOrEqual($1, $3, @1.first_line); }
+    | exp tATMOST exp { $$ = makeExpLessOrEqual($1, $3, @1.first_line); }
+    | exp tGREATER exp { $$ = makeExpGreater($1, $3, @1.first_line); }
+    | exp tLESS exp { $$ = makeExpLess($1, $3, @1.first_line); }
+    | exp tAND exp { $$ = makeExpAnd($1, $3, @1.first_line); }
+    | exp tOR exp { $$ = makeExpOr($1, $3, @1.first_line); }
+    | '(' exp ')' { $$ = $2}
 ;
 
 %%

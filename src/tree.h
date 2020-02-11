@@ -85,40 +85,37 @@ struct STMT {
             struct STMT *block2;
         } ifElse;
     } val;
+    STMT *next;
 };
 
 //The root node
 STMT *astRoot;
 
 //AST building functions
-STMT *makeStmtAssignmentInferred(char *name);
-STMT *makeStmtAssignment(char *name, Type type);
+STMT *makeStmtAssignmentInferred(char *name, int lineno);
+STMT *makeStmtAssignment(char *name, Type type, int lineno);
 
+STMT *makeStmtE
+STMT *makeStmtIf(EXP *condition, STMT *block, int lineno);
+STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno);
+STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno);
 
-STMT *makeStmtskip();
-STMT *makeStmtexp(EXP *exp);
-STMT *makeStmtSequence(STMT *next, STMT *rest);
-STMT *makeStmtRf(EXP *condition, STMT *block);
-STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2);
-STMT *makeStmtWhile(EXP *condition, STMT *block);
-
-EXP *makeExpIntLiteral(int val);
-EXP *makeExpboolLiteral(int val);
-EXP *makeExpFloatLiteral(double val);
-EXP *makeExpstringLiteral(char *val);
-EXP *makeExpid(char *name);
-EXP *makeExpassign(char *lhs, EXP *rhs);
-EXP *makeExpOr(EXP *lhs, EXP *rhs);
-EXP *makeExpAnd(EXP *lhs, EXP *rhs);
-EXP *makeExpEqual(EXP *lhs, EXP *rhs);
-EXP *makeExpLess(EXP *lhs, EXP *rhs);
-EXP *makeExpGreater(EXP *lhs, EXP *rhs);
-EXP *makeExpLessOrEqual(EXP *lhs, EXP *rhs);
-EXP *makeExpGreaterOrEqual(EXP *lhs, EXP *rhs);
-EXP *makeExpnEqual(EXP *lhs, EXP *rhs);
-EXP *makeExpAdditoin(EXP *lhs, EXP *rhs);
-EXP *makeExpSubtraction(EXP *lhs, EXP *rhs);
-EXP *makeExpMultiplication(EXP *lhs, EXP *rhs);
-EXP *makeExpDivision(EXP *lhs, EXP *rhs);
-EXP *makeExpNot(EXP *not);
-EXP *makeExpUnaryMinus(EXP *uminus);
+EXP *makeExpIntLiteral(int val, int lineno);
+EXP *makeExpboolLiteral(int val, int lineno);
+EXP *makeExpFloatLiteral(double val, int lineno);
+EXP *makeExpstringLiteral(char *val, int lineno);
+EXP *makeExpIdentifier(char *name, int lineno);
+EXP *makeExpOr(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpAnd(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpEqual(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpLess(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpGreater(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpLessOrEqual(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpGreaterOrEqual(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpNotEqual(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpAddition(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpSubtraction(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpMultiplication(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpDivision(EXP *lhs, EXP *rhs, int lineno);
+EXP *makeExpNot(EXP *not, int lineno);
+EXP *makeExpUnaryMinus(EXP *uminus, int lineno);
