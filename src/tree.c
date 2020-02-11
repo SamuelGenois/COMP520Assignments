@@ -8,7 +8,7 @@ STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
     s->lineno = lineno;
     s->kind = k_decl;
     s->val.declaration.exp = exp;
-    s->val.declaration.type = Type.type_infer;
+    s->val.declaration.type = type_infer;
     s->val.declaration.identifier = strdup(name);
     return s;
 }
