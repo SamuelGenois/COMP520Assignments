@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS = -Wall
 
-main: parser.tab.o lex.yy.o main.o
+main: parser.tab.o lex.yy.o main.o tree.o printer.o
 	$(CC) lex.yy.o parser.tab.o main.o -o ../minilang -lfl
 
 parser.tab.c parser.tab.h: minilang.y

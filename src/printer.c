@@ -194,17 +194,17 @@ void prettyEXP(EXP *exp)
 }
 
 //Codegen
-void genCode(STMT *ast) {
+void codeGen(STMT *ast) {
     printf("#include <stdio.h>\n");
     printf("#include <stdlib.h>\n");
     printf("#include <string.h>\n");
     genCodeSTMT(stmt);
 }
 
-void genCodeSTMT(STMT *stmt) {
+void codeGenSTMT(STMT *stmt) {
     fprintf(stderr, "Error: Not Implemented\n");
 	exit(1);
 }
 
-void genCodeEXP(EXP *exp, int indentCount) {
+void codeGenEXP(EXP *exp, int indentCount) {
 }

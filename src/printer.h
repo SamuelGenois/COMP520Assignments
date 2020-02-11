@@ -4,4 +4,4 @@
 void pretty(STMT *ast);
 
 //Codegen
-void genCode(STMT *ast);
+void codeGen(STMT *ast);
