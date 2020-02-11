@@ -7,6 +7,9 @@ typedef enum {
     type_string
 } Type;
 
+typedef struct STMT STMT;
+struct STMT;
+
 typedef struct SYMBOL SYMBOL;
 struct SYMBOL {
     char *name;
@@ -77,7 +80,6 @@ typedef enum {
 } StmtKind;
 
 //STMT node
-typedef struct STMT STMT;
 struct STMT {
     int lineno;
     StmtKind kind;

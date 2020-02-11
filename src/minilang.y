@@ -67,11 +67,11 @@ prog : stmts decl { $$ = $2; $$->next = $1; astRoot = $$; }
      | %empty { $$ = NULL; }
 ; 
 
-decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_int, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_bool, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_float, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_string, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeExpDeclarationInferred($2, $4, @1.first_line), @1.first_line); }
+decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_int, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_bool, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_float, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtDeclaration($2, $6, type_string, @1.first_line); }
+     | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeStmtDeclarationInferred($2, $4, @1.first_line); }
 ;
 
 stmts : stmts stmt { $$ = $2; $$->next = $1; }
