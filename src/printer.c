@@ -126,11 +126,17 @@ void prettyEXP(EXP *exp)
     }
 }
 
-void prettySTMT(STMT *stmt) {
+void prettySTMT(STMT *stmt, int indent) {
     if(stmt == 0)
         return;
     
-    prettySTMT(stmt->next);
+    prettySTMT(stmt->next, indent);
+
+    if(stmt->kind = k_block)
+        indent -= 1;
+
+    for(int i=0;i<indent;i++)
+        printf("  ");
 
     switch(stmt->kind) {
         case k_decl:
@@ -162,21 +168,21 @@ void prettySTMT(STMT *stmt) {
             printf("if ( ");
             prettyEXP(stmt->val.ifWhile.condition);
             printf(" )\n");
-            prettySTMT(stmt->val.ifWhile.block);
+            prettySTMT(stmt->val.ifWhile.block, indent + 1);
             break;
         case k_ifelse:
             printf("if ( ");
             prettyEXP(stmt->val.ifElse.condition);
             printf(" )\n");
-            prettySTMT(stmt->val.ifElse.block1);
+            prettySTMT(stmt->val.ifElse.block1, indent + 1);
             printf("else\n");
-            prettySTMT(stmt->val.ifElse.block2);
+            prettySTMT(stmt->val.ifElse.block2, indent + 1);
             break;
         case k_while:
             printf("while ( ");
             prettyEXP(stmt->val.ifWhile.condition);
             printf(" )\n");
-            prettySTMT(stmt->val.ifWhile.block);
+            prettySTMT(stmt->val.ifWhile.block, indent + 1);
             break;
         case k_read:
             printf("read(%s);\n", stmt->val.readIdentifier);
@@ -188,14 +194,14 @@ void prettySTMT(STMT *stmt) {
             break;
         case k_block:
             printf("{\n");
-            prettySTMT(stmt->val.blockContent);
+            prettySTMT(stmt->val.blockContent, indent + 1);
             printf("\n}\n");
             break;
     }
 }
 
 void pretty(STMT *ast) {
-    prettySTMT(ast);
+    prettySTMT(ast, 0);
 }
 
 //Codegen

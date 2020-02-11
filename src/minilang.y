@@ -86,7 +86,7 @@ stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeExpAssignment($1, $3, @1.f
 ;
 
 body : stmt { $$ = $1; }
-     | '{' stmts '}' { $$ = $2; }
+     | '{' stmts '}' { $$ = makeStmtBlock($2, @1.first_line); }
 ;
 
 exp : tIDENTIFIER { $$ = makeExpIdentifier($1, @1.first_line); }
