@@ -55,7 +55,7 @@ print   { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("print\n"
         printf("OK\n");
     if (mode == TOKENS)
         printf("Float value: %s\n", yytext);
-	yylval.intval = atof(yytext);
+	yylval.floatval = atof(yytext);
 	return tFLOATVAL;
 }
 0|([1-9]{DIGIT}*) {
