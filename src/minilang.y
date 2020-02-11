@@ -62,8 +62,8 @@ void yyerror(const char *s) {
 %error-verbose
 
 %% 
-prog : prog decl { $$ = $2; $$->next = $1; }
-     | prog stmt { $$ = $2; $$->next = $1; }
+prog : stmts decl { $$ = $2; $$->next = $1; astRoot = $$ }
+     | stmts stmt { $$ = $2; $$->next = $1; }
      | %empty { $$ = NULL; }
 ; 
 
@@ -93,8 +93,8 @@ body : stmt { $$ = $1; }
 
 exp : tIDENTIFIER
     | tINTVAL { $$ = makeExpIntLiteral($1, @1.first_line); }
-    | tBOOLVAL { $$ = makeBoolIntLiteral($1, @1.first_line); }
-    | tFLOATVAL { $$ = makeExpfloatLiteral($1, @1.first_line); }
+    | tBOOLVAL { $$ = makeBoolLiteral($1, @1.first_line); }
+    | tFLOATVAL { $$ = makeExpFloatLiteral($1, @1.first_line); }
     | tSTRVAL { $$ = makeExpStringLiteral($1, @1.first_line); }
     | '-' exp { $$ = makeExpUnaryMinus($2, @1.first_line); }
     | '!' exp { $$ = makeExpNot($2, @1.first_line); }

@@ -117,7 +117,7 @@ EXP *makeExpDeclarationInferred(char *name, EXP *exp, int lineno);
 EXP *makeExpDeclaration(char *name, EXP *exp, Type type, int lineno);
 EXP *makeExpAssignment(char *name, EXP *exp, int lineno);
 EXP *makeExpIntLiteral(int val, int lineno);
-EXP *makeExpboolLiteral(int val, int lineno);
+EXP *makeExpBoolLiteral(char val, int lineno);
 EXP *makeExpFloatLiteral(double val, int lineno);
 EXP *makeExpStringLiteral(char *val, int lineno);
 EXP *makeExpIdentifier(char *name, int lineno);

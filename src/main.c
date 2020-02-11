@@ -48,14 +48,14 @@ int main( int argc, const char* argv[] ) {
     }
 
     if ( strncmp(argv[1], "typecheck" , 7) == 0 ) {
-        mode = SYMBOL;
+        mode = TYPECHECK;
         yyparse();
         //TODO typecheck
         exit(0);
     }
 
     if ( strncmp(argv[1], "codegen" , 7) == 0 ) {
-        mode = SYMBOL;
+        mode = CODEGEN;
         yyparse();
         //TODO typecheck
         codeGen(astRoot);
