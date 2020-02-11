@@ -3,6 +3,11 @@
 #include <string.h>
 #include "tree.h"
 
+void printIndent(int indent){
+    for(int i=0;i<indent;i++)
+        printf("  ");
+}
+
 //Pretty printer
 void prettyEXP(EXP *exp)
 {
@@ -135,8 +140,7 @@ void prettySTMT(STMT *stmt, int indent) {
     if(stmt->kind == k_block)
         indent -= 1;
 
-    for(int i=0;i<indent;i++)
-        printf("  ");
+    printIndent(indent);
 
     switch(stmt->kind) {
         case k_decl:
@@ -175,6 +179,7 @@ void prettySTMT(STMT *stmt, int indent) {
             prettyEXP(stmt->val.ifElse.condition);
             printf(" )\n");
             prettySTMT(stmt->val.ifElse.block1, indent + 1);
+            printIndent(indent);
             printf("else\n");
             prettySTMT(stmt->val.ifElse.block2, indent + 1);
             break;
@@ -195,7 +200,8 @@ void prettySTMT(STMT *stmt, int indent) {
         case k_block:
             printf("{\n");
             prettySTMT(stmt->val.blockContent, indent + 1);
-            printf("\n}\n");
+            printIndent(indent);
+            printf("}\n");
             break;
     }
 }
