@@ -52,10 +52,12 @@ void prettyEXP(EXP *exp)
             printf(" / ");
             prettyEXP(exp->val.binary.rhs);
             printf(" )");
+            break;
         case k_UnaryMinus:
             printf("-( ");
             prettyEXP(exp->val.exp);
             printf(" )");
+            break;
         case k_Assignment:
             printf("%s = ", exp->val.assignment.identifier);
             prettyEXP(exp->val.assignment.exp);
