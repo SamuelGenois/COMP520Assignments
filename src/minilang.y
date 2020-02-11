@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
-#include "symbol.h"
 
 extern int yylineno;
 int yylex();
