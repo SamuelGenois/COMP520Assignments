@@ -40,7 +40,7 @@ typedef enum {
 typedef struct EXP EXP;
 struct EXP {
     int lineno;
-    TYPE *type;
+    Type type;
     ExpKind kind;
     union {
         char *identifier;
@@ -94,10 +94,10 @@ struct STMT {
 STMT *astRoot;
 
 //AST building functions
-STMT *makeStmtAssignmentInferred(char *name, int lineno);
-STMT *makeStmtAssignment(char *name, Type type, int lineno);
+STMT *makeStmtDeclarationInferred(char *name, int lineno) { return NULL; }
+STMT *makeStmtDeclaration(char *name, Type type, , int lineno){ return NULL; }
+STMT *makeStmtAssignment(char *name, EXP *exp, , int lineno){ return NULL; }
 
-STMT *makeStmtE
 STMT *makeStmtIf(EXP *condition, STMT *block, int lineno);
 STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno);
 STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno);

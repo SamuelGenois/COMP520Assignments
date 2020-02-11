@@ -1,9 +1,9 @@
+#include <stdio.h>
+
 STMT *makeStmtDeclarationInferred(char *name, int lineno) { return NULL; }
 STMT *makeStmtDeclaration(char *name, Type type, , int lineno){ return NULL; }
-
 STMT *makeStmtAssignment(char *name, EXP *exp, , int lineno){ return NULL; }
 
-//STMT *makeStmtSequence(STMT *next, STMT *rest) { return NULL; }
 STMT *makeStmtIf(EXP *condition, STMT *block) { return NULL; }
 STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2) { return NULL; }
 STMT *makeStmtWhile(EXP *condition, STMT *block) { return NULL; }
