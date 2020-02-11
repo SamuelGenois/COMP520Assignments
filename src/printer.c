@@ -191,7 +191,7 @@ void prettySTMT(STMT *stmt) {
 }
 
 void pretty(STMT *ast) {
-    prettySTMT(*ast);
+    prettySTMT(ast);
 }
 
 //Codegen

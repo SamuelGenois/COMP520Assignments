@@ -62,8 +62,8 @@ void yyerror(const char *s) {
 %error-verbose
 
 %% 
-prog : stmts decl { $$ = $2; $$->next = $1; astRoot = $$; }
-     | stmts stmt { $$ = $2; $$->next = $1; }
+prog : stmts decl { $$ = $2; $$->next = $1; astRoot = $$; printf("%i\n", $$)}
+     | stmts stmt { $$ = $2; $$->next = $1; printf("%i\n", $$)}
      | %empty { $$ = NULL; }
 ; 
 
@@ -74,12 +74,12 @@ decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtDeclaration($2, $6, 
      | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtDeclarationInferred($2, $4, @1.first_line); }
 ;
 
-stmts : stmts stmt { $$ = $2; $$->next = $1; }
-      | stmts decl { $$ = $2; $$->next = $1; }
+stmts : stmts stmt { $$ = $2; $$->next = $1; printf("%i\n", $$)}
+      | stmts decl { $$ = $2; $$->next = $1; printf("%i\n", $$)}
       | %empty { $$ = NULL; }
 ;
 
-stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeExpAssignment($1, $3, @1.first_line), @1.first_line); }
+stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeExpAssignment($1, $3, @1.first_line), @1.first_line); printf("%i\n", $$)}
      | tIF '(' exp ')' body { $$ = makeStmtIf($3, $5, @1.first_line); }
      | tIF '(' exp ')' body tELSE body { $$ = makeStmtIfElse($3, $5, $7, @1.first_line); }
      | tWHILE '(' exp ')' body { $$ = makeStmtWhile($3, $5, @1.first_line); }
