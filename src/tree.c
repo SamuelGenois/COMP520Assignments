@@ -91,7 +91,7 @@ EXP *makeExpIntLiteral(int val, int lineno) {
     e->val.intLiteral = val;
     return e;
 }
-EXP *makeExpboolLiteral(char val, int lineno) {
+EXP *makeExpBoolLiteral(char val, int lineno) {
     EXP *e = malloc(sizeof(EXP));
     e->lineno = lineno;
     e->kind = k_BoolLiteral;

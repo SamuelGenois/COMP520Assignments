@@ -67,10 +67,10 @@ prog : prog decl { $$ = $2; $$->next = $1; }
      | %empty { $$ = NULL; }
 ; 
 
-decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, Type.type_int, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, Type.type_bool, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, Type.type_float, @1.first_line), @1.first_line); }
-     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, Type.type_string, @1.first_line), @1.first_line); }
+decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_int, @1.first_line), @1.first_line); }
+     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_bool, @1.first_line), @1.first_line); }
+     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_float, @1.first_line), @1.first_line); }
+     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtExp(makeExpDeclaration($2, $6, type_string, @1.first_line), @1.first_line); }
      | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeExpDeclarationInferred($2, $4, @1.first_line), @1.first_line); }
 ;
 
@@ -79,7 +79,7 @@ stmts : stmts stmt { $$ = $2; $$->next = $1; }
       | %empty { $$ = NULL; }
 ;
 
-stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtAssignment($1, $3, @1.first_line); }
+stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtExp(makeExpAssignment($1, $3, @1.first_line), @1.first_line); }
      | tIF '(' exp ')' body { $$ = makeStmtIf($3, $5, @1.first_line); }
      | tIF '(' exp ')' body tELSE body { $$ = makeStmtIfElse($3, $5, $7, @1.first_line); }
      | tWHILE '(' exp ')' body { $$ = makeStmtWhile($3, $5, @1.first_line); }
