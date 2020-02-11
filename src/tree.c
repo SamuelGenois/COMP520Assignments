@@ -2,15 +2,40 @@
 #include <stdlib.h>
 #include <string.h>
 
-STMT *makeStmtDeclarationInferred(char *name, int lineno) { return NULL; }
-STMT *makeStmtDeclaration(char *name, Type type, , int lineno){ return NULL; }
-STMT *makeStmtAssignment(char *name, EXP *exp, , int lineno){ return NULL; }
+STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_decl;
+    s->val.assignment.exp = exp;
+    s->val.assignment.identifier = strdup(name);
+    return e;
+}
+STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_decl;
+    s->val.assignment.exp = exp;
+    s->val.assignment.type = type;
+    s->val.assignment.identifier = strdup(name);
+    return e;
+}
+STMT *makeStmtAssignment(char *name, EXP *exp, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->val.assignment.exp = exp;
+    s->val.assignment.identifier = strdup(name);
+    return e;
+}
 
-STMT *makeStmtIf(EXP *condition, STMT *block) { return NULL; }
-STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2) { return NULL; }
-STMT *makeStmtWhile(EXP *condition, STMT *block) { return NULL; }
-STMT *makeStmtRead(EXP *condition) { return NULL; }
-STMT *makeStmtPrint(EXP *condition) { return NULL; }
+STMT *makeStmtExp(EXP *exp, int lineno) {
+
+}
+
+STMT *makeStmtIf(EXP *condition, STMT *block, int lineno) { return NULL; }
+STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno) { return NULL; }
+STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno) { return NULL; }
+STMT *makeStmtRead(EXP *condition, int lineno) { return NULL; }
+STMT *makeStmtPrint(EXP *condition, int lineno) { return NULL; }
 
 EXP *makeExpIntLiteral(int val, int lineno) {
     EXP *e = malloc(sizeof(EXP));

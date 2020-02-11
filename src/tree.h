@@ -6,13 +6,6 @@ typedef enum {
     type_string
 } Type;
 
-typedef struct VAR VAR;
-struct VAR {
-    int lineno;
-    char *identifier;
-    Type type;
-};
-
 //Expression node
 typedef enum {
     k_Identifier,
@@ -54,10 +47,8 @@ struct EXP {
 };
 
 typedef enum {
-    k_skip,
-    k_local,
-    k_exp,
-    k_sequence,
+    k_decl,
+    k_assign,
     k_if,
     k_ifelse,
     k_while,
@@ -71,12 +62,11 @@ struct STMT {
     int lineno;
     StmtKind kind;
     union {
-        struct EXP *expression;
-        struct VAR *var;
         struct {
-            struct STMT *next;
-            struct STMT *rest;
-        } sequence;
+            EXP *expression;
+            char *identifier;
+            Type type;
+        } assignment;
         struct {
             struct EXP *condition;
             struct STMT *block;

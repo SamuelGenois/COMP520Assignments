@@ -34,8 +34,8 @@ void yyerror(const char *s) {
     float floatval;
     char *strval;
 	char *identifier;
-    struct EXP *exp;
-    struct STMT *stmt;
+    EXP *exp;
+    STMT *stmt;
 }
 
 %token tVAR tINT tBOOL tFLOAT tSTRING
@@ -69,8 +69,8 @@ prog : prog decl { $$ = $2; $$->next = $1; }
 
 decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeStmtDeclaration($6, Type.type_int, @1.first_line); }
      | tVAR tIDENTIFIER ':' tBOOL '=' exp ';' { $$ = makeStmtDeclaration($6, Type.type_bool, @1.first_line); }
-     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtDeclaration($6, type_float, @1.first_line); }
-     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtDeclaration($6, type_string, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';' { $$ = makeStmtDeclaration($6, Type.type_float, @1.first_line); }
+     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';' { $$ = makeStmtDeclaration($6, Type.type_string, @1.first_line); }
      | tVAR tIDENTIFIER '=' exp ';' { $$ = makeStmtDeclarationInferred($4, @1.first_line); }
 ;
 
@@ -110,7 +110,7 @@ exp : tIDENTIFIER
     | exp tLESS exp { $$ = makeExpLess($1, $3, @1.first_line); }
     | exp tAND exp { $$ = makeExpAnd($1, $3, @1.first_line); }
     | exp tOR exp { $$ = makeExpOr($1, $3, @1.first_line); }
-    | '(' exp ')' { $$ = $2}
+    | '(' exp ')' { $$ = $2; }
 ;
 
 %%
