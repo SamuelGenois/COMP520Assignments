@@ -10,14 +10,12 @@ typedef enum {
 typedef struct SYMBOL SYMBOL;
 struct SYMBOL {
     char *name;
-    Type type;
+    STMT *declaration;
     struct SYMBOL *next;
 };
 
 //Expression node
 typedef enum {
-    k_Decl,
-    k_Assign,
     k_Identifier,
     k_IntLiteral,
     k_FloatLiteral,
@@ -46,7 +44,6 @@ struct EXP {
     Type type;
     ExpKind kind;
     union {
-        char *identifier;
         int intLiteral;
         double floatLiteral;
         char boolLiteral;
@@ -56,21 +53,20 @@ struct EXP {
             EXP *rhs;
         } binary;
         struct {
-            EXP *expression;
-            SYMBOL *sym;
-            Type type;
-            char *identifier;
-        } declaration;
-        struct {
-            EXP *expression;
+            EXP *exp;
             SYMBOL *sym;
             char *identifier;
         } assignment;
+        struct {
+            char *identifier;
+            SYMBOL *sym;
+        } identifierExp;
         EXP *exp;
     } val;
 };
 
 typedef enum {
+    k_decl,
     k_exp,
     k_if,
     k_ifelse,
@@ -86,6 +82,12 @@ struct STMT {
     int lineno;
     StmtKind kind;
     union {
+        struct {
+            EXP *exp;
+            SYMBOL *sym;
+            Type type;
+            char *identifier;
+        } declaration;
         struct {
             struct EXP *condition;
             struct STMT *block;
@@ -109,12 +111,12 @@ STMT *makeStmtExp(EXP *condition, int lineno);
 STMT *makeStmtIf(EXP *condition, STMT *block, int lineno);
 STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno);
 STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno);
-STMT *makeStmtRead(EXP *input, int lineno);
+STMT *makeStmtRead(char *readIdentifier, int lineno);
 STMT *makeStmtPrint(EXP *output, int lineno);
 STMT *makeStmtBlock(STMT *statements, int lineno);
+STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno);
+STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno);
 
-EXP *makeExpDeclarationInferred(char *name, EXP *exp, int lineno);
-EXP *makeExpDeclaration(char *name, EXP *exp, Type type, int lineno);
 EXP *makeExpAssignment(char *name, EXP *exp, int lineno);
 EXP *makeExpIntLiteral(int val, int lineno);
 EXP *makeExpBoolLiteral(char val, int lineno);

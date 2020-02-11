@@ -1,5 +1,5 @@
 //Pretty printer
-void pretty(STMT astRoot);
+void prettySTMT(STMT astRoot);
 
 //Codegen
-void genCode(STMT astRoot);
+void genCodeSTMT(STMT astRoot);

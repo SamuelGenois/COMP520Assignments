@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-EXP *makeExpDeclarationInferred(char *name, EXP *exp, int lineno) {
-    EXP *s = malloc(sizeof(EXP));
+STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
+    Stmt *s = malloc(sizeof(Stmt));
     s->lineno = lineno;
     s->kind = k_Decl;
     s->val.declaration.exp = exp;
@@ -11,21 +11,13 @@ EXP *makeExpDeclarationInferred(char *name, EXP *exp, int lineno) {
     s->val.declaration.identifier = strdup(name);
     return s;
 }
-STMT *makeExpDeclaration(char *name, EXP *exp, Type type, int lineno) {
-    EXP *s = malloc(sizeof(EXP));
+STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
+    Stmt *s = malloc(sizeof(Stmt));
     s->lineno = lineno;
     s->kind = k_Decl;
     s->val.declaration.exp = exp;
     s->val.declaration.type = type;
     s->val.declaration.identifier = strdup(name);
-    return s;
-}
-STMT *makeExpAssignment(char *name, EXP *exp, int lineno) {
-    EXP *s = malloc(sizeof(EXP));
-    s->lineno = lineno;
-    s->kind = k_Assign;
-    s->val.assignment.exp = exp;
-    s->val.assignment.identifier = strdup(name);
     return s;
 }
 
@@ -84,6 +76,14 @@ STMT *makeStmtBlock(STMT *statements, int lineno) {
     return s;
 }
 
+EXP *makeExpAssignment(char *name, EXP *exp, int lineno) {
+    EXP *e = malloc(sizeof(EXP));
+    e->lineno = lineno;
+    e->kind = k_Assign;
+    e->val.assignment.exp = exp;
+    e->val.assignment.identifier = strdup(name);
+    return e;
+}
 EXP *makeExpIntLiteral(int val, int lineno) {
     EXP *e = malloc(sizeof(EXP));
     e->lineno = lineno;
@@ -116,7 +116,7 @@ EXP *makeExpIdentifier(char *name, int lineno) {
     EXP *e = malloc(sizeof(EXP));
     e->lineno = lineno;
     e->kind = k_Identifier;
-    e->val.identifier = strdup(name);
+    e->val.identifierExp.identifier = strdup(name);
     return e;
 }
 EXP *makeExpOr(EXP *lhs, EXP *rhs, int lineno) {
