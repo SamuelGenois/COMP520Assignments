@@ -1,20 +1,4 @@
 //Expression node
-typedef struct EXP EXP;
-struct EXP {
-    int lineno;
-    TYPE *type;
-    ExpKind kind;
-    union {
-        char *identifier;
-        int intLiteral;
-        double floatLiteral;
-        char boolLiteral;
-        char *strLiteral
-        struct { EXP *lhs; EXP *rhs; } binary;
-        struct { EXP *inner; } unary;
-    } val;
-};
-
 typedef enum {
     k_Identifier,
     k_IntLiteral,
@@ -37,6 +21,32 @@ typedef enum {
     k_Less
     k_LessOrEqual
 } ExpKind;
+
+typedef struct EXP EXP;
+struct EXP {
+    int lineno;
+    //TYPE *type;
+    ExpKind kind;
+    union {
+        char *identifier;
+        int intLiteral;
+        double floatLiteral;
+        char boolLiteral;
+        char *strLiteral
+        struct { EXP *lhs; EXP *rhs; } binary;
+        struct { EXP *inner; } unary;
+    } val;
+};
+
+typedef enum {
+    k_skip,
+    k_local,
+    k_exp,
+    k_sequence,
+    k_if,
+    k_ifelse,
+    k_while,
+} StmtKind;
 
 //STMT node
 typedef struct STMT STMT;
@@ -61,16 +71,6 @@ struct STMT {
         } ifElse;
     } val;
 };
-
-typedef enum {
-    k_skip,
-    k_local,
-    k_exp,
-    k_sequence,
-    k_if,
-    k_ifelse,
-    k_while,
-} StmtKind;
 
 //LOCAL *makeLOCAL(char *name, TYPE *type, LOCAL *next);
 
