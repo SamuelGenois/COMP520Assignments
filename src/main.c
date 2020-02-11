@@ -2,6 +2,7 @@
 #include <stdlib.h> 
 #include <string.h>
 #include "modes.h"
+#include "tree.h"
 
 void yyflex();
 void yyparse();
