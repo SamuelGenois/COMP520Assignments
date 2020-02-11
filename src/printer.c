@@ -58,6 +58,7 @@ void prettyEXP(EXP *exp)
             printf(" )");
         case k_Assignment:
             printf("%s = ", exp->val.assignment.identifier);
+            prettyEXP(exp->val.assignment.exp);
             break;
         case k_Or:
             printf("( ");
@@ -149,6 +150,7 @@ void prettySTMT(STMT *stmt) {
                     break;
             }
             prettyEXP(stmt->val.declaration.exp);
+            printf(";\n");
             break;
         case k_exp:
             prettyEXP(stmt->val.exp);
