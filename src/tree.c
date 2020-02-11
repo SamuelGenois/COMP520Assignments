@@ -10,7 +10,6 @@ STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
     s->val.declaration.exp = exp;
     s->val.declaration.type = type_infer;
     s->val.declaration.identifier = strdup(name);
-    printf(s->val.declaration.identifier);
     return s;
 }
 STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
@@ -20,7 +19,6 @@ STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
     s->val.declaration.exp = exp;
     s->val.declaration.type = type;
     s->val.declaration.identifier = strdup(name);
-    printf(s->val.declaration.identifier);
     return s;
 }
 
@@ -92,7 +90,6 @@ EXP *makeExpIntLiteral(int val, int lineno) {
     e->lineno = lineno;
     e->kind = k_IntLiteral;
     e->val.intLiteral = val;
-    printf(e->val.intLiteral);
     return e;
 }
 EXP *makeExpBoolLiteral(char val, int lineno) {
@@ -100,7 +97,6 @@ EXP *makeExpBoolLiteral(char val, int lineno) {
     e->lineno = lineno;
     e->kind = k_BoolLiteral;
     e->val.boolLiteral = val;
-    printf(e->val.boolLiteral);
     return e;
 }
 EXP *makeExpFloatLiteral(double val, int lineno) {
@@ -108,7 +104,6 @@ EXP *makeExpFloatLiteral(double val, int lineno) {
     e->lineno = lineno;
     e->kind = k_FloatLiteral;
     e->val.floatLiteral = val;
-    printf(e->val.floatLiteral);
     return e;
 }
 EXP *makeExpStringLiteral(char *val, int lineno) {
