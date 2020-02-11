@@ -34,8 +34,8 @@ void yyerror(const char *s) {
     float floatval;
     char *strval;
 	char *identifier;
-    EXP *exp;
-    STMT *stmt;
+    struct EXP *exp;
+    struct STMT *stmt;
 }
 
 %token tVAR tINT tBOOL tFLOAT tSTRING

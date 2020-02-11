@@ -6,6 +6,13 @@ typedef enum {
     type_string
 } Type;
 
+typedef struct SYMBOL SYMBOL;
+struct SYMBOL {
+    char *name;
+    Type type;
+    struct SYMBOL *next;
+};
+
 //Expression node
 typedef enum {
     k_Identifier,
@@ -64,8 +71,8 @@ struct STMT {
     union {
         struct {
             EXP *expression;
+            SYMBOL *sym;
             char *identifier;
-            Type type;
         } assignment;
         struct {
             struct EXP *condition;
