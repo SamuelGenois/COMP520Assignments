@@ -49,7 +49,7 @@ struct EXP {
         char boolLiteral;
         char *strLiteral;
         struct { EXP *lhs; EXP *rhs; } binary;
-        struct { EXP *inner; } unary;
+        EXP *exp;
     } val;
 };
 
@@ -107,7 +107,7 @@ STMT *makeStmtPrint(EXP *condition) { return NULL; }
 EXP *makeExpIntLiteral(int val, int lineno);
 EXP *makeExpboolLiteral(int val, int lineno);
 EXP *makeExpFloatLiteral(double val, int lineno);
-EXP *makeExpstringLiteral(char *val, int lineno);
+EXP *makeExpStringLiteral(char *val, int lineno);
 EXP *makeExpIdentifier(char *name, int lineno);
 EXP *makeExpOr(EXP *lhs, EXP *rhs, int lineno);
 EXP *makeExpAnd(EXP *lhs, EXP *rhs, int lineno);
@@ -121,5 +121,5 @@ EXP *makeExpAddition(EXP *lhs, EXP *rhs, int lineno);
 EXP *makeExpSubtraction(EXP *lhs, EXP *rhs, int lineno);
 EXP *makeExpMultiplication(EXP *lhs, EXP *rhs, int lineno);
 EXP *makeExpDivision(EXP *lhs, EXP *rhs, int lineno);
-EXP *makeExpNot(EXP *not, int lineno);
-EXP *makeExpUnaryMinus(EXP *uminus, int lineno);
+EXP *makeExpNot(EXP *exp, int lineno);
+EXP *makeExpUnaryMinus(EXP *exp, int lineno);

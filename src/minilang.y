@@ -60,7 +60,7 @@ void yyerror(const char *s) {
 %error-verbose
 
 %% 
-prog : prog decl { $$ = *makeStmtSequence(STMT *next, STMT *rest, int lineno); }
+prog : prog decl { $$ = $2; $$->next = $1; }
      | prog stmt { $$ = $2; $$->next = $1; }
      | %empty { $$ = NULL; }
 ; 
