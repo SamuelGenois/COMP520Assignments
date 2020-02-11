@@ -61,6 +61,8 @@ typedef enum {
     k_if,
     k_ifelse,
     k_while,
+    k_read,
+    k_print
 } StmtKind;
 
 //STMT node
@@ -99,6 +101,8 @@ STMT *makeStmtE
 STMT *makeStmtIf(EXP *condition, STMT *block, int lineno);
 STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno);
 STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno);
+STMT *makeStmtRead(EXP *condition) { return NULL; }
+STMT *makeStmtPrint(EXP *condition) { return NULL; }
 
 EXP *makeExpIntLiteral(int val, int lineno);
 EXP *makeExpboolLiteral(int val, int lineno);

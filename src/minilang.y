@@ -79,11 +79,11 @@ stmts : stmts stmt { $$ = $2; $$->next = $1; }
 ;
 
 stmt : tIDENTIFIER '=' exp ';' { $$ = makeStmtAssignment($1, $3, @1.first_line); }
-     | tIF '(' exp ')' body { $$ = makeStmtAssignment($1, $3, @1.first_line); }
-     | tIF '(' exp ')' body tELSE body { $$ = (, @1.first_line); }
-     | tWHILE '(' exp ')' body { $$ = (, @1.first_line); }
-     | tREAD '(' tIDENTIFIER ')' ';' { $$ = (, @1.first_line); }
-     | tPRINT '(' exp ')' ';' { $$ = (, @1.first_line); }
+     | tIF '(' exp ')' body { $$ = makeStmtIf($3, $5, @1.first_line); }
+     | tIF '(' exp ')' body tELSE body { $$ = makeStmtIfElse($3, $5, $7, @1.first_line); }
+     | tWHILE '(' exp ')' body { $$ = makeStmtWhile($3, $5, @1.first_line); }
+     | tREAD '(' tIDENTIFIER ')' ';' { $$ = makeStmtRead($3, @1.first_line); }
+     | tPRINT '(' exp ')' ';' { $$ = makeStmtPrint($3, @1.first_line); }
 ;
 
 body : stmt { $$ = $1; }
