@@ -91,6 +91,7 @@ type : tINT
 ;
 
 stmts : stmts stmt
+      | stmts decl
       | %empty
 ;
 
@@ -111,6 +112,7 @@ exp : tIDENTIFIER
     | tBOOLVAL
     | tFLOATVAL
     | tSTRVAL
+    | '-' exp
     | '!' exp
     | exp '*' exp
     | exp '/' exp

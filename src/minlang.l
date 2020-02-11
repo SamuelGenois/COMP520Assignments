@@ -15,7 +15,7 @@ DIGIT [0-9]
 %option nounput
 
 %%
-#[^\n]+\n
+#[^\n]*\n
 [ \t\r\n]+
 
 "+"     { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("+\n"); return '+'; }
@@ -74,7 +74,7 @@ print   { if (mode == SCAN) printf("OK\n"); if (mode == TOKENS) printf("print\n"
 	yylval.boolval = strcmp(yytext, "True") == 0;
 	return tBOOLVAL;
 }
-\".*\" {
+\"[^\"]*\" {
     if (mode == SCAN)
         printf("OK\n");
     if (mode == TOKENS)

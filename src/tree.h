@@ -15,10 +15,10 @@ typedef enum {
     k_And,
     k_Not,
     k_Equal,
-    k_NotEqual
-    k_Greater
-    k_GreaterOrEqual
-    k_Less
+    k_NotEqual,
+    k_Greater,
+    k_GreaterOrEqual,
+    k_Less,
     k_LessOrEqual
 } ExpKind;
 
@@ -32,7 +32,7 @@ struct EXP {
         int intLiteral;
         double floatLiteral;
         char boolLiteral;
-        char *strLiteral
+        char *strLiteral;
         struct { EXP *lhs; EXP *rhs; } binary;
         struct { EXP *inner; } unary;
     } val;
