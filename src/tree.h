@@ -26,7 +26,7 @@ typedef enum {
     k_Multiplication,
     k_Division,
     k_UnaryMinus,
-    k_Assignment
+    k_Assignment,
     k_Or,
     k_And,
     k_Not,
