@@ -132,7 +132,7 @@ void prettySTMT(STMT *stmt, int indent) {
     
     prettySTMT(stmt->next, indent);
 
-    if(stmt->kind = k_block)
+    if(stmt->kind == k_block)
         indent -= 1;
 
     for(int i=0;i<indent;i++)

@@ -72,7 +72,7 @@ STMT *makeStmtPrint(EXP *output, int lineno)  {
 STMT *makeStmtBlock(STMT *statements, int lineno) {
     STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
-    s->kind = k_print;
+    s->kind = k_block;
     s->val.blockContent = statements;
     return s;
 }
