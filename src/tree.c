@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "tree.h"
 
 STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
     Stmt *s = malloc(sizeof(Stmt));
