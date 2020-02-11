@@ -89,10 +89,10 @@ body : stmt { $$ = $1; }
      | '{' stmts '}' { $$ = $2; }
 ;
 
-exp : tIDENTIFIER
+exp : tIDENTIFIER { $$ = makeExpIdentifier($1, @1.first_line); printf("minlang id: %s\n",$$->val.identifierExp.identifier);}
     | tINTVAL { $$ = makeExpIntLiteral($1, @1.first_line); }
     | tBOOLVAL { $$ = makeExpBoolLiteral($1, @1.first_line); }
-    | tFLOATVAL { $$ = makeExpFloatLiteral($1, @1.first_line); }
+    | tFLOATVAL { $$ = makeExpFloatLiteral($1, @1.first_line); printf("minlang float: %f\n",$$->val.floatLiteral);}
     | tSTRVAL { $$ = makeExpStringLiteral($1, @1.first_line); }
     | '-' exp { $$ = makeExpUnaryMinus($2, @1.first_line); }
     | '!' exp { $$ = makeExpNot($2, @1.first_line); }
