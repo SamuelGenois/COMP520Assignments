@@ -1,0 +1,4 @@
+if(True) {
+    var x : int = 0
+}
+x = 2

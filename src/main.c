@@ -3,6 +3,8 @@
 #include <string.h>
 #include "modes.h"
 #include "tree.h"
+#include "symbol.h"
+#include "printer.h"
 
 void yyflex();
 void yyparse();
@@ -30,6 +32,35 @@ int main( int argc, const char* argv[] ) {
         mode = PARSE;
         yyparse();
         printf("OK\n");
+        exit(0);
+    }
+
+    if ( strncmp(argv[1], "pretty" , 6) == 0 ) {
+        mode = PRETTY;
+        yyparse();
+        pretty(astRoot);
+        exit(0);
+    }
+
+    if ( strncmp(argv[1], "symbol" , 6) == 0 ) {
+        mode = SYMBOL;
+        yyparse();
+        printSymbolTable(symbolTable);
+        exit(0);
+    }
+
+    if ( strncmp(argv[1], "typecheck" , 7) == 0 ) {
+        mode = SYMBOL;
+        yyparse();
+        //TODO typecheck
+        exit(0);
+    }
+
+    if ( strncmp(argv[1], "codegen" , 7) == 0 ) {
+        mode = SYMBOL;
+        yyparse();
+        //TODO typecheck
+        codeGen(astRoot);
         exit(0);
     }
 

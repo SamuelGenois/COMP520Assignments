@@ -1,0 +1,2 @@
+if ("string")
+    print(0);

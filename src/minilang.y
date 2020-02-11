@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
+#include "symbol.h"
 
 extern int yylineno;
 int yylex();
@@ -80,14 +81,11 @@ prog : prog decl
      | %empty
 ; 
 
-decl : tVAR tIDENTIFIER ':' type '=' exp ';'
+decl : tVAR tIDENTIFIER ':' tINT '=' exp ';' { $$ = makeSTATEMENT_assign($1, $3); }
+     | tVAR tIDENTIFIER ':' tBOOL '=' exp ';'
+     | tVAR tIDENTIFIER ':' tFLOAT '=' exp ';'
+     | tVAR tIDENTIFIER ':' tSTRING '=' exp ';'
      | tVAR tIDENTIFIER '=' exp ';'
-;
-
-type : tINT
-     | tBOOL
-     | tFLOAT
-     | tSTRING
 ;
 
 stmts : stmts stmt
@@ -108,7 +106,7 @@ body : stmt
 ;
 
 exp : tIDENTIFIER
-    | tINTVAL
+    | tINTVAL { $$ = makeEXP_intLiteral($1, @1.first_line); }
     | tBOOLVAL
     | tFLOATVAL
     | tSTRVAL
