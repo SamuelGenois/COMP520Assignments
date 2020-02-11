@@ -2,40 +2,87 @@
 #include <stdlib.h>
 #include <string.h>
 
-STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
-    STMT *s = malloc(sizeof(STMT));
+EXP *makeExpDeclarationInferred(char *name, EXP *exp, int lineno) {
+    EXP *s = malloc(sizeof(EXP));
     s->lineno = lineno;
-    s->kind = k_decl;
-    s->val.assignment.exp = exp;
-    s->val.assignment.identifier = strdup(name);
-    return e;
+    s->kind = k_Decl;
+    s->val.declaration.exp = exp;
+    s->val.declaration.type = Type.type_infer;
+    s->val.declaration.identifier = strdup(name);
+    return s;
 }
-STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
-    STMT *s = malloc(sizeof(STMT));
+STMT *makeExpDeclaration(char *name, EXP *exp, Type type, int lineno) {
+    EXP *s = malloc(sizeof(EXP));
     s->lineno = lineno;
-    s->kind = k_decl;
-    s->val.assignment.exp = exp;
-    s->val.assignment.type = type;
-    s->val.assignment.identifier = strdup(name);
-    return e;
+    s->kind = k_Decl;
+    s->val.declaration.exp = exp;
+    s->val.declaration.type = type;
+    s->val.declaration.identifier = strdup(name);
+    return s;
 }
-STMT *makeStmtAssignment(char *name, EXP *exp, int lineno) {
-    STMT *s = malloc(sizeof(STMT));
+STMT *makeExpAssignment(char *name, EXP *exp, int lineno) {
+    EXP *s = malloc(sizeof(EXP));
     s->lineno = lineno;
+    s->kind = k_Assign;
     s->val.assignment.exp = exp;
     s->val.assignment.identifier = strdup(name);
-    return e;
+    return s;
 }
 
 STMT *makeStmtExp(EXP *exp, int lineno) {
-
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_exp;
+    s->val.exp = exp;
+    return s;
 }
 
-STMT *makeStmtIf(EXP *condition, STMT *block, int lineno) { return NULL; }
-STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno) { return NULL; }
-STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno) { return NULL; }
-STMT *makeStmtRead(EXP *condition, int lineno) { return NULL; }
-STMT *makeStmtPrint(EXP *condition, int lineno) { return NULL; }
+STMT *makeStmtIf(EXP *condition, STMT *block, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_if;
+    s->val.ifWhile.condition = condition;
+    s->val.ifWhile.block = block;
+    return s;
+}
+STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_ifelse;
+    s->val.ifWhile.condition = condition;
+    s->val.ifWhile.block1 = block1;
+    s->val.ifWhile.block2 = block2;
+    return s;
+}
+STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_while;
+    s->val.ifElse.condition = condition;
+    s->val.ifElse.block = block;
+    return s;
+}
+STMT *makeStmtRead(char *readIdentifier, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_read;
+    s->val.readIdentifier = readIdentifier;
+    return s;
+}
+STMT *makeStmtPrint(EXP *output, int lineno)  {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_print;
+    s->val.exp = output;
+    return s;
+}
+STMT *makeStmtBlock(STMT *statements, int lineno) {
+    STMT *s = malloc(sizeof(STMT));
+    s->lineno = lineno;
+    s->kind = k_print;
+    s->val.blockContent = statements;
+    return s;
+}
 
 EXP *makeExpIntLiteral(int val, int lineno) {
     EXP *e = malloc(sizeof(EXP));

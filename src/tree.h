@@ -1,5 +1,6 @@
 //Type and variable struct
 typedef enum {
+    type_infer,
     type_int,
     type_bool,
     type_float,
@@ -15,6 +16,8 @@ struct SYMBOL {
 
 //Expression node
 typedef enum {
+    k_Decl,
+    k_Assign,
     k_Identifier,
     k_IntLiteral,
     k_FloatLiteral,
@@ -48,19 +51,33 @@ struct EXP {
         double floatLiteral;
         char boolLiteral;
         char *strLiteral;
-        struct { EXP *lhs; EXP *rhs; } binary;
+        struct {
+            EXP *lhs;
+            EXP *rhs;
+        } binary;
+        struct {
+            EXP *expression;
+            SYMBOL *sym;
+            Type type;
+            char *identifier;
+        } declaration;
+        struct {
+            EXP *expression;
+            SYMBOL *sym;
+            char *identifier;
+        } assignment;
         EXP *exp;
     } val;
 };
 
 typedef enum {
-    k_decl,
-    k_assign,
+    k_exp,
     k_if,
     k_ifelse,
     k_while,
     k_read,
-    k_print
+    k_print,
+    k_block
 } StmtKind;
 
 //STMT node
@@ -70,11 +87,6 @@ struct STMT {
     StmtKind kind;
     union {
         struct {
-            EXP *expression;
-            SYMBOL *sym;
-            char *identifier;
-        } assignment;
-        struct {
             struct EXP *condition;
             struct STMT *block;
         } ifWhile;
@@ -83,6 +95,8 @@ struct STMT {
             struct STMT *block1;
             struct STMT *block2;
         } ifElse;
+        STMT *blockContent;
+        char *readIdentifier;
     } val;
     STMT *next;
 };
@@ -91,16 +105,17 @@ struct STMT {
 STMT *astRoot;
 
 //AST building functions
-STMT *makeStmtDeclarationInferred(char *name, int lineno) { return NULL; }
-STMT *makeStmtDeclaration(char *name, Type type, int lineno){ return NULL; }
-STMT *makeStmtAssignment(char *name, EXP *exp, int lineno){ return NULL; }
-
+STMT *makeStmtExp(EXP *condition, int lineno);
 STMT *makeStmtIf(EXP *condition, STMT *block, int lineno);
 STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno);
 STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno);
-STMT *makeStmtRead(EXP *condition) { return NULL; }
-STMT *makeStmtPrint(EXP *condition) { return NULL; }
+STMT *makeStmtRead(EXP *input, int lineno);
+STMT *makeStmtPrint(EXP *output, int lineno);
+STMT *makeStmtBlock(STMT *statements, int lineno);
 
+EXP *makeExpDeclarationInferred(char *name, EXP *exp, int lineno);
+EXP *makeExpDeclaration(char *name, EXP *exp, Type type, int lineno);
+EXP *makeExpAssignment(char *name, EXP *exp, int lineno);
 EXP *makeExpIntLiteral(int val, int lineno);
 EXP *makeExpboolLiteral(int val, int lineno);
 EXP *makeExpFloatLiteral(double val, int lineno);
