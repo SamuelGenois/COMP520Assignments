@@ -6,7 +6,7 @@
 STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
     STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
-    s->kind = k_Decl;
+    s->kind = k_decl;
     s->val.declaration.exp = exp;
     s->val.declaration.type = Type.type_infer;
     s->val.declaration.identifier = strdup(name);
@@ -15,7 +15,7 @@ STMT *makeStmtDeclarationInferred(char *name, EXP *exp, int lineno) {
 STMT *makeStmtDeclaration(char *name, EXP *exp, Type type, int lineno) {
     STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
-    s->kind = k_Decl;
+    s->kind = k_decl;
     s->val.declaration.exp = exp;
     s->val.declaration.type = type;
     s->val.declaration.identifier = strdup(name);
@@ -42,17 +42,17 @@ STMT *makeStmtIfElse(EXP *condition, STMT *block1, STMT *block2, int lineno) {
     STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
     s->kind = k_ifelse;
-    s->val.ifWhile.condition = condition;
-    s->val.ifWhile.block1 = block1;
-    s->val.ifWhile.block2 = block2;
+    s->val.ifElse.condition = condition;
+    s->val.ifElse.block1 = block1;
+    s->val.ifElse.block2 = block2;
     return s;
 }
 STMT *makeStmtWhile(EXP *condition, STMT *block, int lineno) {
     STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
     s->kind = k_while;
-    s->val.ifElse.condition = condition;
-    s->val.ifElse.block = block;
+    s->val.ifWhile.condition = condition;
+    s->val.ifWhile.block = block;
     return s;
 }
 STMT *makeStmtRead(char *readIdentifier, int lineno) {
@@ -80,7 +80,7 @@ STMT *makeStmtBlock(STMT *statements, int lineno) {
 EXP *makeExpAssignment(char *name, EXP *exp, int lineno) {
     EXP *e = malloc(sizeof(EXP));
     e->lineno = lineno;
-    e->kind = k_Assign;
+    e->kind = k_Assignment;
     e->val.assignment.exp = exp;
     e->val.assignment.identifier = strdup(name);
     return e;
@@ -227,6 +227,6 @@ EXP *makeExpUnaryMinus(EXP *exp, int lineno) {
     EXP *e = malloc(sizeof(EXP));
     e->lineno = lineno;
     e->kind = k_UnaryMinus;
-    e->val.exp = exp
+    e->val.exp = exp;
     return e;
 }

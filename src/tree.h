@@ -101,6 +101,7 @@ struct STMT {
         } ifElse;
         STMT *blockContent;
         char *readIdentifier;
+        EXP *exp;
     } val;
     STMT *next;
 };
