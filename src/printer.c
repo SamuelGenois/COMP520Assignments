@@ -190,7 +190,7 @@ void prettySTMT(STMT *stmt, int indent) {
         case k_print:
             printf("print(");
             prettyEXP(stmt->val.exp);
-            printf(")\n");
+            printf(");\n");
             break;
         case k_block:
             printf("{\n");
@@ -205,10 +205,10 @@ void pretty(STMT *ast) {
 }
 
 //Codegen
-void codeGenEXP(EXP *exp, int indentCount) {
+void codeGenEXP(EXP *exp) {
 }
 
-void codeGenSTMT(STMT *stmt) {
+void codeGenSTMT(STMT *stmt, int indentCount) {
     fprintf(stderr, "Error: Not Implemented\n");
 	exit(1);
 }
@@ -216,6 +216,6 @@ void codeGenSTMT(STMT *stmt) {
 void codeGen(STMT *ast) {
     printf("#include <stdio.h>\n");
     printf("#include <stdlib.h>\n");
-    printf("#include <string.h>\n");
-    codeGenSTMT(ast);
+    printf("#include <string.h>\n\n");
+    codeGenSTMT(ast, 0);
 }
