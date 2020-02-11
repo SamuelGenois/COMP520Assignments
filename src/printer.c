@@ -5,16 +5,36 @@
 
 //Pretty printer
 void pretty(STMT *ast) {
-    prettySTMT(STMT *ast);
+    prettySTMT(*ast);
 }
 
 void prettySTMT(STMT *stmt) {
     if(stmt == 0)
         return;
     
-    prettySTMT(stmt->val.next);
+    prettySTMT(stmt->next);
 
     switch(stmt->kind) {
+        case k_decl:
+            switch(stmt->val.declaration.type) {
+                case type_int:
+                    printf("var %s : int = ", stmt->val.declaration.identifier);
+                    break;
+                case type_bool:
+                    printf("var %s : bool = ", stmt->val.declaration.identifier);
+                    break;
+                case type_float:
+                    printf("var %s : float = ", stmt->val.declaration.identifier);
+                    break;
+                case type_string:
+                    printf("var %s : string = ", stmt->val.declaration.identifier);
+                    break;
+                case type_infer:
+                    printf("var %s = ", stmt->val.declaration.identifier);
+                    break;
+            }
+            prettyEXP(stmt->val.declaration.exp);
+            break;
         case k_exp:
             prettyEXP(stmt->val.exp);
             printf(";\n");
@@ -58,26 +78,6 @@ void prettySTMT(STMT *stmt) {
 void prettyEXP(EXP *exp)
 {
     switch (exp->kind) {
-        case k_Decl:
-            switch(exp->val.declaration) {
-                case type_int:
-                    printf("var %s : int = ", exp->val.declaration.identifier)
-                    break;
-                case type_bool:
-                    printf("var %s : bool = ", exp->val.declaration.identifier)
-                    break;
-                case type_float:
-                    printf("var %s : float = ", exp->val.declaration.identifier)
-                    break;
-                case type_string:
-                    printf("var %s : string = ", exp->val.declaration.identifier)
-                    break;
-                case type_infer:
-                    printf("var %s = ", exp->val.declaration.identifier)
-                    break;
-            }
-            prettyEXP(exp->val.declaration.exp);
-            break;
         case k_Identifier:
             printf("%s", exp->val.identifierExp.identifier);
             break;
@@ -199,7 +199,7 @@ void codeGen(STMT *ast) {
     printf("#include <stdio.h>\n");
     printf("#include <stdlib.h>\n");
     printf("#include <string.h>\n");
-    genCodeSTMT(stmt);
+    genCodeSTMT(ast);
 }
 
 void codeGenSTMT(STMT *stmt) {
