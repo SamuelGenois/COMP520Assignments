@@ -84,10 +84,10 @@ SYMBOL *putSymbol(char *name, Type type, SymbolTable *t, int lineno) {
 }
 
 void symExp(EXP *exp, SymbolTable *symbolTable) {
-    printf("Entering exp, kind: %i", exp->kind);
+    printf("Entering exp, kind: %i\n", exp->kind);
     switch (exp->kind) {
         case k_Identifier:
-            exp->val.identifierExp.sym = getSymbol(exp->val.assignment.identifier, symbolTable);
+            exp->val.identifierExp.sym = getSymbol(exp->val.identifierExp.identifier, symbolTable);
             break;
         case k_Assignment:
             exp->val.assignment.sym = getSymbol(exp->val.assignment.identifier, symbolTable);
