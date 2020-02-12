@@ -165,9 +165,9 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
     }
 }
 
-void sym(STMT *ast) {
+/*void sym(STMT *ast) {
     SymbolTable *table = initSymbolTable();
     symStmt(ast, table);
     if(mode == SYMBOLPRINT)
         printSymTable(table, 0);
-}
+}*/
