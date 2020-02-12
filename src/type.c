@@ -38,7 +38,7 @@ void typeExp(EXP *e) {
     printf("Entering exp of kind %i on line %i\n", e->kind, e->lineno);
     switch (e->kind) {
         case k_Identifier:
-            e->type = typeVar(e->val.identifierExp.sym);
+            e->type = e->val.identifierExp.sym->type;
             break;
         case k_Assignment:
             e->type = e->val.assignment.sym->type;
@@ -103,7 +103,7 @@ void typeExp(EXP *e) {
                 (e->val.binary.rhs->type == type_int || e->val.binary.rhs->type == type_float))
                 e->type = type_float;
             else
-                switch (kind) {
+                switch (e->kind) {
                     case k_Subtraction:
                         reportError("arguments for - have wrong types", e->lineno);
                         break;
@@ -170,10 +170,11 @@ void typeStmt(STMT *s) {
             break;
         case k_decl:
             if(s->val.declaration.type == type_infer)
-                s->val.declaration.sym->type = typeExp(s->val.declaration.exp);
+                typeExp(s->val.declaration.exp);
+                s->val.declaration.sym->type = s->val.declaration.exp;
             else
                 if(!assignType(s->val.declaration.sym->type, s->val.declaration.exp->type))
-                    reportError("illegal assignment", e->lineno);
+                    reportError("illegal assignment", s->lineno);
             break;
         case k_print:
         case k_read:
