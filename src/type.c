@@ -169,10 +169,9 @@ void typeStmt(STMT *s) {
             typeStmt(s->val.blockContent);
             break;
         case k_decl:
-            if(s->val.declaration.type == type_infer) {
-                typeExp(s->val.declaration.exp);
+            typeExp(s->val.declaration.exp);
+            if(s->val.declaration.type == type_infer)
                 s->val.declaration.sym->type = s->val.declaration.exp->type;
-            }
             else
                 if(!assignType(s->val.declaration.sym->type, s->val.declaration.exp->type))
                     reportError("illegal assignment", s->lineno);
