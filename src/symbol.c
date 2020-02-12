@@ -15,23 +15,22 @@ void printSymTable(SymbolTable *symbolTable, int lineno) {
     for (int i = 0; i < HashSize; i++) {
         SYMBOL *sym = symbolTable->table[i];
         while(sym != 0) {
-            printf("  Symbol:\n");
-            printf("    name: %s\n", sym->name);
+            printf("    %s : ", sym->name);
             switch(sym->type) {
                 case type_infer:
-                    printf("    type: inferred\n");
+                    printf("inferred\n");
                     break;
                 case type_int:
-                    printf("    type: int\n");
+                    printf("int\n");
                     break;
                 case type_bool:
-                    printf("    type: bool\n");
+                    printf("bool\n");
                     break;
                 case type_float:
-                    printf("    type: float\n");
+                    printf("float\n");
                     break;
                 case type_string:
-                    printf("    type: string\n");
+                    printf("string\n");
                     break;
             }
             sym = sym->next;
