@@ -4,8 +4,6 @@
 #include "modes.h"
 #include "symbol.h"
 
-#define NULL 0
-
 int Hash(char *str) {
     unsigned int hash = 0;
     while (*str) hash = (hash << 1) + *str++;
@@ -122,6 +120,7 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
 }
 
 void symStmt(STMT *stmt, SymbolTable *symbolTable) {
+    SymbolTable *subTable;
     printf("Entering stmt, kind: %i", stmt->kind);
     if (stmt == NULL) {
         return;
@@ -158,7 +157,7 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
             //TODO
             break;
         case k_block:
-            SymbolTable *subTable = scopeSymbolTable(symbolTable);
+            subTable = scopeSymbolTable(symbolTable);
             symStmt(stmt->val.blockContent, subTable);
             if(mode == SYMBOLPRINT)
                 printSymTable(subTable, stmt->lineno);
