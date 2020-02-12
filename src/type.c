@@ -141,7 +141,6 @@ void typeExp(EXP *e) {
 }
 
 void typeStmt(STMT *s) {
-    Type type;
     if (s == NULL)
         return;
     printf("Entering stmt of kind %i on line %i\n", s->kind, s->lineno);
@@ -169,9 +168,10 @@ void typeStmt(STMT *s) {
             typeStmt(s->val.blockContent);
             break;
         case k_decl:
-            if(s->val.declaration.type == type_infer)
+            if(s->val.declaration.type == type_infer) {
                 typeExp(s->val.declaration.exp);
-                s->val.declaration.sym->type = s->val.declaration.exp;
+                s->val.declaration.sym->type = s->val.declaration.exp->type;
+            }
             else
                 if(!assignType(s->val.declaration.sym->type, s->val.declaration.exp->type))
                     reportError("illegal assignment", s->lineno);
