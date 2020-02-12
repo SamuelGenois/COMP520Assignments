@@ -52,6 +52,7 @@ int main( int argc, const char* argv[] ) {
         yyparse();
         sym(astRoot);
         //TODO typecheck
+        printf("OK\n");
         exit(0);
     }
 
