@@ -74,6 +74,7 @@ SYMBOL *putSymbol(char *name, Type type, SymbolTable *t, int lineno) {
             fprintf(stderr, "Error: (line %d) variable %s is already declared\n", lineno, name);
             exit(1);
         }
+    }
     SYMBOL *s = malloc(sizeof(SYMBOL));
     s->name = name;
     s->type = type;
@@ -165,9 +166,9 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
     }
 }
 
-/*void sym(STMT *ast) {
+void sym(STMT *ast) {
     SymbolTable *table = initSymbolTable();
     symStmt(ast, table);
     if(mode == SYMBOLPRINT)
         printSymTable(table, 0);
-}*/
+}
