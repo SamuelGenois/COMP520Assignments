@@ -51,7 +51,7 @@ int main( int argc, const char* argv[] ) {
         mode = TYPECHECK;
         yyparse();
         sym(astRoot);
-        //TODO typecheck
+        type(astRoot);
         printf("OK\n");
         exit(0);
     }
@@ -59,7 +59,8 @@ int main( int argc, const char* argv[] ) {
     if ( strncmp(argv[1], "codegen" , 7) == 0 ) {
         mode = CODEGEN;
         yyparse();
-        //TODO typecheck
+        sym(astRoot);
+        type(astRoot);
         codeGen(astRoot);
         exit(0);
     }

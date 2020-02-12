@@ -1,4 +1,4 @@
-#include "typecheck.h"
+#include "type.h"
 
 //Pretty printer
 void pretty(STMT *ast);

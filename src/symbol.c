@@ -53,17 +53,18 @@ SymbolTable *scopeSymbolTable(SymbolTable *s) {
     return t;
 }
 
-SYMBOL *getSymbol(char *name, SymbolTable *t) {
+SYMBOL *getSymbol(char *name, SymbolTable *t, int lineno) {
     int i = Hash(name);
     
     for (SYMBOL *s = t->table[i]; s; s = s->next) {
         if (strcmp(s->name, name) == 0) return s;
     }
     
-    if (t->parent == NULL)
-        return NULL;
+    if (t->parent == NULL) {
+        fprintf(stderr, "Error: (line %d) variable %s has not been declared\n", lineno, name);
+    }
     
-    return getSymbol(name, t->parent);
+    return getSymbol(name, t->parent, lineno);
 }
 
 SYMBOL *putSymbol(char *name, Type type, SymbolTable *t, int lineno) {
@@ -85,10 +86,10 @@ SYMBOL *putSymbol(char *name, Type type, SymbolTable *t, int lineno) {
 void symExp(EXP *exp, SymbolTable *symbolTable) {
     switch (exp->kind) {
         case k_Identifier:
-            exp->val.identifierExp.sym = getSymbol(exp->val.identifierExp.identifier, symbolTable);
+            exp->val.identifierExp.sym = getSymbol(exp->val.identifierExp.identifier, symbolTable, exp->lineno);
             break;
         case k_Assignment:
-            exp->val.assignment.sym = getSymbol(exp->val.assignment.identifier, symbolTable);
+            exp->val.assignment.sym = getSymbol(exp->val.assignment.identifier, symbolTable, exp->lineno);
             symExp(exp->val.assignment.exp, symbolTable);
             break;
         case k_Addition:
@@ -150,7 +151,7 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
             symStmt(stmt->val.ifWhile.block, symbolTable);
             break;
         case k_read:
-            getSymbol(stmt->val.readIdentifier, symbolTable);
+            getSymbol(stmt->val.readIdentifier, symbolTable, stmt->lineno);
             break;
         case k_block:
             subTable = scopeSymbolTable(symbolTable);
