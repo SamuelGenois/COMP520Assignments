@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "printer.h"
+#include "tree.h"
 
 void printIndent(int indent){
     for(int i=0;i<indent;i++)

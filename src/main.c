@@ -2,9 +2,7 @@
 #include <stdlib.h> 
 #include <string.h>
 #include "modes.h"
-#include "tree.h"
 #include "printer.h"
-#include "symbol.h"
 
 void yyflex();
 void yyparse();
