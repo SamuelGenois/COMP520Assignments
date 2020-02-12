@@ -11,10 +11,11 @@ int Hash(char *str) {
 }
 
 void printSymTable(SymbolTable *symbolTable, int lineno) {
+    printf("Symbol table for block starting at line %i:\n", lineno);
     for (int i = 0; i < HashSize; i++) {
         SYMBOL *sym = symbolTable->table[i];
         while(sym != 0) {
-            printf("  Symbol:");
+            printf("  Symbol:\n");
             printf("    name: %s\n", sym->name);
             switch(sym->type) {
                 case type_infer:
@@ -132,6 +133,7 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
                 symbolTable,
                 stmt->lineno);
             break;
+        case k_print:
         case k_exp:
             symExp(stmt->val.exp, symbolTable);
             break;
@@ -149,10 +151,7 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
             symStmt(stmt->val.ifWhile.block, symbolTable);
             break;
         case k_read:
-            //TODO
-            break;
-        case k_print:
-            //TODO
+            getSymbol(stmt->val.readIdentifier, symbolTable);
             break;
         case k_block:
             subTable = scopeSymbolTable(symbolTable);
