@@ -110,12 +110,13 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
             symExp(exp->val.binary.lhs, symbolTable);
             break;
         case k_UnaryMinus:
-            printf("-( ");
-            prettyEXP(exp->val.exp);
-            printf(" )");
-            break;
         case k_Not:
             symExp(exp->val.exp, symbolTable);
+            break;
+        case k_IntLiteral:
+        case k_BoolLiteral:
+        case k_FloatLiteral:
+        case k_StringLiteral:
             break;
     }
 }
@@ -160,13 +161,13 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
             SymbolTable *subTable = scopeSymbolTable(symbolTable);
             symStmt(stmt->val.blockContent, subTable);
             if(mode == SYMBOLPRINT)
-                printSymTable(subTable, stmt->lineno)
+                printSymTable(subTable, stmt->lineno);
             break;
     }
 }
 
 void sym(STMT *ast) {
-    SymbolTable *table = initSymbolTable()
+    SymbolTable *table = initSymbolTable();
     symStmt(ast, table);
     if(mode == SYMBOLPRINT)
         printSymTable(table, 0);
