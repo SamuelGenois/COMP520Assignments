@@ -6,7 +6,7 @@ typedef struct SymbolTable SymbolTable;
 typedef struct SymbolTable {
     SYMBOL *table[HashSize];
     struct SymbolTable *parent;
+    STMT *declaration;
 } SymbolTable;
 
-//Root symbol table
-SymbolTable *symbolTable
+void sym(STMT *ast);

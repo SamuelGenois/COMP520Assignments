@@ -13,7 +13,7 @@ struct STMT;
 typedef struct SYMBOL SYMBOL;
 struct SYMBOL {
     char *name;
-    STMT *declaration;
+    Type type;
     struct SYMBOL *next;
 };
 
