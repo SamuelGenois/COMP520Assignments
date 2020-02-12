@@ -4,6 +4,7 @@
 #include "modes.h"
 #include "printer.h"
 #include "symbol.h"
+#include "tree.h"
 
 void yyflex();
 void yyparse();
