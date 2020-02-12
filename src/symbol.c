@@ -122,10 +122,10 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
 
 void symStmt(STMT *stmt, SymbolTable *symbolTable) {
     SymbolTable *subTable;
-    printf("Entering stmt, kind: %i", stmt->kind);
     if (stmt == NULL) {
         return;
     }
+    printf("Entering stmt, kind: %i", stmt->kind);
     symStmt(stmt->next, symbolTable);
     switch (stmt->kind) {
         case k_decl:
