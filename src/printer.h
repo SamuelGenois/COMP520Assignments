@@ -1,3 +1,5 @@
+#include "tree.h"
+
 //Pretty printer
 void pretty(STMT *ast);
 
