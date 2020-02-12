@@ -15,7 +15,7 @@ int Hash(char *str) {
 void printSymTable(SymbolTable *symbolTable, int lineno) {
     printf("SymbolTable (starting line %i) :\n", lineno);
     for (int i = 0; i < HashSize; i++) {
-        SYMBOL *sym = t->table[i];
+        SYMBOL *sym = symbolTable->table[i];
         while(sym != 0) {
             printf("  Symbol:");
             printf("    name: %s\n", sym->name);
@@ -66,7 +66,7 @@ SYMBOL *getSymbol(char *name, SymbolTable *t) {
     if (t->parent == NULL)
         return NULL;
     
-    return getSymbol(t->parent, name);
+    return getSymbol(name, t->parent);
 }
 
 SYMBOL *putSymbol(char *name, Type type, SymbolTable *t, int lineno) {
@@ -92,7 +92,7 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
             break;
         case k_Assignment:
             exp->val.assignment.sym = getSymbol(exp->val.assignment.identifier, symbolTable);
-            symImplementationEXP(exp->val.assignment.exp, symbolTable);
+            symExp(exp->val.assignment.exp, symbolTable);
             break;
         case k_Addition:
         case k_Subtraction:
@@ -106,8 +106,8 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
         case k_GreaterOrEqual:
         case k_Less:
         case k_LessOrEqual:
-            symImplementationEXP(exp->val.binary.lhs, symbolTable);
-            symImplementationEXP(exp->val.binary.lhs, symbolTable);
+            symExp(exp->val.binary.lhs, symbolTable);
+            symExp(exp->val.binary.lhs, symbolTable);
             break;
         case k_UnaryMinus:
             printf("-( ");
@@ -115,7 +115,7 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
             printf(" )");
             break;
         case k_Not:
-            symImplementationEXP(exp->val.exp, symbolTable);
+            symExp(exp->val.exp, symbolTable);
             break;
     }
 }
@@ -135,20 +135,20 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
                 stmt->lineno);
             break;
         case k_exp:
-            symImplementationEXP(stmt->val.expS,this,sym,stat);
+            symExp(stmt->val.exp, symbolTable);
             break;
         case k_if:
-            symImplementationEXP(->val.ifS.condition,this,sym,stat);
-            symStmt(s->val.ifS.body,this,sym,stat);
+            symExp(stmt->val.ifWhile.condition, symbolTable);
+            symStmt(stmt->val.ifWhile.block, symbolTable);
             break;
         case k_ifelse:
-            symImplementationEXP(s->val.ifelseS.condition,this,sym,stat);
-            symStmt(s->val.ifelseS.thenpart,this,sym,stat);
-            symStmt(s->val.ifelseS.elsepart,this,sym,stat);
+            symExp(stmt->val.ifElse.condition, symbolTable);
+            symStmt(stmt->val.ifElse.block1, symbolTable);
+            symStmt(stmt->val.ifElse.block2, symbolTable);
             break;
         case k_while:
-            symImplementationEXP(s->val.whileS.condition,this,sym,stat);
-            symStmt(s->val.whileS.body,this,sym,stat);
+            symExp(stmt->val.ifWhile.condition, symbolTable);
+            symStmt(stmt->val.ifWhile.block, symbolTable);
             break;
         case k_read:
             //TODO
@@ -163,11 +163,11 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
                 printSymTable(subTable, stmt->lineno)
             break;
     }
+}
 
-    void sym(STMT *ast) {
-        SymbolTable *table = initSymbolTable()
-        symStmt(ast, table);
-        if(mode == SYMBOLPRINT)
-            printSymTable(table, 0);
-    }
+void sym(STMT *ast) {
+    SymbolTable *table = initSymbolTable()
+    symStmt(ast, table);
+    if(mode == SYMBOLPRINT)
+        printSymTable(table, 0);
 }
