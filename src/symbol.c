@@ -11,7 +11,6 @@ int Hash(char *str) {
 }
 
 void printSymTable(SymbolTable *symbolTable, int lineno) {
-    printf("SymbolTable (starting line %i) :\n", lineno);
     for (int i = 0; i < HashSize; i++) {
         SYMBOL *sym = symbolTable->table[i];
         while(sym != 0) {
@@ -84,7 +83,6 @@ SYMBOL *putSymbol(char *name, Type type, SymbolTable *t, int lineno) {
 }
 
 void symExp(EXP *exp, SymbolTable *symbolTable) {
-    printf("Entering exp, kind: %i\n", exp->kind);
     switch (exp->kind) {
         case k_Identifier:
             exp->val.identifierExp.sym = getSymbol(exp->val.identifierExp.identifier, symbolTable);
