@@ -143,6 +143,7 @@ void typeExp(EXP *e) {
 void typeStmt(STMT *s) {
     if (s == NULL)
         return;
+    typeStmt(s->next);
     printf("Entering stmt of kind %i on line %i\n", s->kind, s->lineno);
     switch (s->kind) {
         case k_exp:
