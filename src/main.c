@@ -3,6 +3,7 @@
 #include <string.h>
 #include "modes.h"
 #include "printer.h"
+#include "symbol.h"
 
 void yyflex();
 void yyparse();
@@ -43,13 +44,14 @@ int main( int argc, const char* argv[] ) {
     if ( strncmp(argv[1], "symbol" , 6) == 0 ) {
         mode = SYMBOLPRINT;
         yyparse();
-        //printSymbolTable(symbolTable);
+        sym(astRoot);
         exit(0);
     }
 
     if ( strncmp(argv[1], "typecheck" , 7) == 0 ) {
         mode = TYPECHECK;
         yyparse();
+        sym(astRoot);
         //TODO typecheck
         exit(0);
     }
