@@ -125,8 +125,8 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
     if (stmt == NULL) {
         return;
     }
-    printf("Entering stmt, kind: %i", stmt->kind);
     symStmt(stmt->next, symbolTable);
+    printf("Entering stmt, kind: %i\n", stmt->kind);
     switch (stmt->kind) {
         case k_decl:
             stmt->val.declaration.sym = putSymbol(
