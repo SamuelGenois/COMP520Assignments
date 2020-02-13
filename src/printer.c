@@ -409,8 +409,6 @@ void codeGenSTMT(STMT *stmt, int indent) {
                 case type_string:
                     printf("\"%%s\",");
                     break;
-                default:
-                    printf("\n\nError: print type: %i\n", stmt->val.exp->type);
             }
             codeGenEXP(stmt->val.exp);
             printf(");\n");
