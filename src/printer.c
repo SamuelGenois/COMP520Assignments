@@ -428,5 +428,5 @@ void codeGen(STMT *ast) {
     printf("#include <string.h>\n\n");
     printf("void main() {\n")
     codeGenSTMT(ast, 1);
-    printf("}\n")
+    printf("}\n");
 }
