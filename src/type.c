@@ -175,6 +175,8 @@ void typeStmt(STMT *s) {
                     reportError("illegal assignment", s->lineno);
             break;
         case k_print:
+            typeExp(s->val.exp);
+            break;
         case k_read:
             break;
     }
