@@ -105,7 +105,7 @@ void symExp(EXP *exp, SymbolTable *symbolTable) {
         case k_Less:
         case k_LessOrEqual:
             symExp(exp->val.binary.lhs, symbolTable);
-            symExp(exp->val.binary.lhs, symbolTable);
+            symExp(exp->val.binary.rhs, symbolTable);
             break;
         case k_UnaryMinus:
         case k_Not:
