@@ -62,6 +62,7 @@ SYMBOL *getSymbol(char *name, SymbolTable *t, int lineno) {
     
     if (t->parent == NULL) {
         fprintf(stderr, "Error: (line %d) variable %s has not been declared\n", lineno, name);
+        exit(1);
     }
     
     return getSymbol(name, t->parent, lineno);

@@ -35,7 +35,7 @@ int assignType(Type type1, Type type2) {
 }
 
 void typeExp(EXP *e) {
-    printf("Entering exp of kind %i on line %i\n", e->kind, e->lineno);
+    //printf("Entering exp of kind %i on line %i\n", e->kind, e->lineno);
     switch (e->kind) {
         case k_Identifier:
             e->type = e->val.identifierExp.sym->type;
@@ -144,7 +144,6 @@ void typeStmt(STMT *s) {
     if (s == NULL)
         return;
     typeStmt(s->next);
-    printf("Entering stmt of kind %i on line %i\n", s->kind, s->lineno);
     switch (s->kind) {
         case k_exp:
             typeExp(s->val.exp);

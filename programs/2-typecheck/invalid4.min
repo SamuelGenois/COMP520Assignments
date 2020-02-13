@@ -1,2 +1,2 @@
-var x = True
-var y = x && 2
+var x = True;
+var y = x && 2;

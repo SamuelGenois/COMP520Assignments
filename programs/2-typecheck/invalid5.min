@@ -1,4 +1,4 @@
 if(True) {
-    var x : int = 0
+    var x : int = 0;
 }
-x = 2
+x = 2;

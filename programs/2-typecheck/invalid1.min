@@ -1,2 +1,2 @@
 var x = 0;
-x = "string"
+x = "string";
