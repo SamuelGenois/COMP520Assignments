@@ -190,7 +190,7 @@ void prettySTMT(STMT *stmt, int indent) {
             prettySTMT(stmt->val.ifWhile.block, indent + 1);
             break;
         case k_read:
-            printf("read(%s);\n", stmt->val.readIdentifier);
+            printf("read(%s);\n", stmt->val.read.identifier);
             break;
         case k_print:
             printf("print(");
@@ -228,100 +228,100 @@ void codeGenEXP(EXP *exp) {
             break;
         case k_Addition:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" + ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_Subtraction:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" - ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_Multiplication:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" * ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_Division:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" / ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_UnaryMinus:
             printf("-( ");
-            prettyEXP(exp->val.exp);
+            codeGenEXP(exp->val.exp);
             printf(" )");
             break;
         case k_Assignment:
             printf("%s = ", exp->val.assignment.identifier);
-            prettyEXP(exp->val.assignment.exp);
+            codeGenEXP(exp->val.assignment.exp);
             break;
         case k_Or:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" || ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_And:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" && ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_Not:
             printf("!( ");
-            prettyEXP(exp->val.exp);
+            codeGenEXP(exp->val.exp);
             printf(" )");
             break;
         case k_Equal:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" == ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_NotEqual:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" != ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_Greater:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" > ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_GreaterOrEqual:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" >= ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_Less:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" < ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
         case k_LessOrEqual:
             printf("( ");
-            prettyEXP(exp->val.binary.lhs);
+            codeGenEXP(exp->val.binary.lhs);
             printf(" <= ");
-            prettyEXP(exp->val.binary.rhs);
+            codeGenEXP(exp->val.binary.rhs);
             printf(" )");
             break;
     }
@@ -382,7 +382,7 @@ void codeGenSTMT(STMT *stmt, int indent) {
             break;
         case k_read:
             printf("scanf(");
-            switch(getSymbol(stmt->val.readIdentifier)->type) {
+            switch(stmt->val.read.sym->type) {
                 case type_bool:
                 case type_int:
                     printf("\"%%i\"");
@@ -394,7 +394,7 @@ void codeGenSTMT(STMT *stmt, int indent) {
                     printf("\"%%s\"");
                     break;
             }
-            printf",%s);\n", stmt->val.readIdentifier);
+            printf(",%s);\n", stmt->val.read.identifier);
             break;
         case k_print:
             printf("printf(");

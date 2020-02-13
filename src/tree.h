@@ -100,7 +100,10 @@ struct STMT {
             struct STMT *block2;
         } ifElse;
         STMT *blockContent;
-        char *readIdentifier;
+        struct {
+            char *identifier;
+            SYMBOL *sym;
+        } read;
         EXP *exp;
     } val;
     STMT *next;

@@ -9,6 +9,4 @@ typedef struct SymbolTable {
     STMT *declaration;
 } SymbolTable;
 
-SYMBOL *getSymbol(char *name, SymbolTable *t, int lineno);
-
 void sym(STMT *ast);

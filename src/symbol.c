@@ -153,7 +153,7 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
             symStmt(stmt->val.ifWhile.block, symbolTable);
             break;
         case k_read:
-            getSymbol(stmt->val.readIdentifier, symbolTable, stmt->lineno);
+            stmt->val.read.sym = getSymbol(stmt->val.read.identifier, symbolTable, stmt->lineno);
             break;
         case k_block:
             subTable = scopeSymbolTable(symbolTable);

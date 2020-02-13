@@ -59,7 +59,7 @@ STMT *makeStmtRead(char *readIdentifier, int lineno) {
     STMT *s = malloc(sizeof(STMT));
     s->lineno = lineno;
     s->kind = k_read;
-    s->val.readIdentifier = readIdentifier;
+    s->val.read.identifier = readIdentifier;
     return s;
 }
 STMT *makeStmtPrint(EXP *output, int lineno)  {
