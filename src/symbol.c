@@ -128,6 +128,7 @@ void symStmt(STMT *stmt, SymbolTable *symbolTable) {
     symStmt(stmt->next, symbolTable);
     switch (stmt->kind) {
         case k_decl:
+            symExp(stmt->val.declaration.exp);
             stmt->val.declaration.sym = putSymbol(
                 stmt->val.declaration.identifier,
                 stmt->val.declaration.type,
